@@ -1,9 +1,9 @@
 export type BaseModelData = Record<string, any>
 
 export interface ModelData extends BaseModelData {
-	created: string
-	updated: string | null
-	deleted: string | null
+	created: Date | string
+	updated?: Date | string
+	deleted?: Date | string
 }
 
 export interface ModelIDData extends ModelData {
