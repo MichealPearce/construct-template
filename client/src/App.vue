@@ -18,6 +18,7 @@ body,
 	margin: 0;
 	padding: 0;
 
+	font-family: 'Fira Mono', monospace;
 	font-size: medium;
 
 	overflow: hidden;
@@ -31,6 +32,7 @@ h5,
 h6 {
 	margin: 0;
 	padding: 0.5em 0px;
+	font-weight: 700;
 }
 
 p {

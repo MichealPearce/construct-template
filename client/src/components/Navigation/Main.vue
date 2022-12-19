@@ -14,7 +14,9 @@ export default defineComponent({
 			<h1 class="brand-name">Construct</h1>
 		</div>
 
-		<menu> menu </menu>
+		<menu>
+			<ConstructLink to="/">Home</ConstructLink>
+		</menu>
 	</nav>
 </template>
 
