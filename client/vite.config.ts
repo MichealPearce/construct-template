@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
+import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig(env => {
@@ -14,6 +15,12 @@ export default defineConfig(env => {
 	return {
 		envDir: '../',
 		envPrefix: 'CLIENT_',
+
+		resolve: {
+			alias: {
+				'@construct/client': resolve('src'),
+			},
+		},
 
 		css: {
 			preprocessorOptions: {
@@ -44,8 +51,11 @@ export default defineConfig(env => {
 			vue(),
 			Pages({
 				routeStyle: 'nuxt',
+				importMode: 'sync',
 			}),
-			Layouts(),
+			Layouts({
+				importMode: () => 'sync',
+			}),
 			Components({
 				dts: 'src/types/components.d.ts',
 				deep: true,

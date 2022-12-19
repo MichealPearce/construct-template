@@ -11,7 +11,13 @@
 		"esModuleInterop": true,
 		"lib": ["ESNext", "DOM"],
 		"skipLibCheck": true,
-		"noEmit": true
+		"noEmit": true,
+		"suppressImplicitAnyIndexErrors": true,
+
+		"baseUrl": ".",
+		"paths": {
+			"@construct/client/*": ["src/*"]
+		}
 	},
 	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
 	"references": [{ "path": "./tsconfig.node.json" }]

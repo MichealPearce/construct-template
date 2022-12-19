@@ -1,4 +1,5 @@
 <script lang="ts">
+import { useAuth } from '@construct/client/stores/auth'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -6,7 +7,9 @@ export default defineComponent({
 })
 </script>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const auth = useAuth()
+</script>
 
 <template>
 	<nav class="navigation-main">
@@ -16,6 +19,10 @@ export default defineComponent({
 
 		<menu>
 			<ConstructLink to="/">Home</ConstructLink>
+
+			<template v-if="auth.current">
+				{{ auth.current.name }}
+			</template>
 		</menu>
 	</nav>
 </template>

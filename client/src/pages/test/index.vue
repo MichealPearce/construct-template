@@ -1,27 +1,22 @@
 <script lang="ts">
 import { authed } from '@construct/client/middleware/authed'
-import { useAuth } from '@construct/client/stores/auth'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-	name: 'IndexPage',
+	name: 'TestIndexPage',
 	middleware: [authed],
 })
 </script>
 
-<script setup lang="ts">
-const auth = useAuth()
-</script>
+<script setup lang="ts"></script>
 
 <template>
-	<ConstructPage class="index-page">
-		<h1>Hello</h1>
-
-		<button @click="auth.login">Test</button>
+	<ConstructPage class="test-index-page">
+		<h1>Hello Test Index</h1>
 	</ConstructPage>
 </template>
 
 <style lang="scss" scoped>
-.index-page {
+.test-index-page {
 }
 </style>

@@ -1,5 +1,5 @@
 import { Entries } from '../types'
-import { isPrimitive, not } from './is'
+import { isArray, isObject, isPrimitive, not } from './is'
 
 export const noop = (): void => undefined
 
@@ -22,13 +22,13 @@ export function clone<A extends Record<any, any>>(target: A): A {
 	return fromEntries(toEntries(target))
 }
 
-export function cloneDeep<A extends Record<any, any>>(target: A): A {
-	return fromEntries(
-		toEntries(target).map(([key, value]) => [
-			key,
-			isPrimitive(value) ? value : cloneDeep(value),
-		]),
-	)
+export function cloneDeep<A>(target: A): A {
+	if (isArray(target)) return target.map(cloneDeep) as A
+	else if (isObject(target))
+		return fromEntries(
+			toEntries(target).map(([key, value]) => [key, cloneDeep(value)]),
+		) as A
+	else return target
 }
 
 /**

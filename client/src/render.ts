@@ -1,10 +1,17 @@
-import { createApp } from 'vue'
+import { setupAPI } from '@construct/client/plugins/api'
+import { setupRouter } from '@construct/client/plugins/router'
+import { ClientContext } from '@construct/client/types'
+import { createApp, reactive } from 'vue'
 import App from './App.vue'
-import { createRouter, createWebHistory } from 'vue-router'
-import { setupLayouts } from 'virtual:generated-layouts'
-import generatedRoutes from 'virtual:generated-pages'
 
-const routes = setupLayouts(generatedRoutes)
-const router = createRouter({ routes, history: createWebHistory() })
+const context = {
+	app: createApp(App),
+	state: reactive({}),
+} as ClientContext
 
-createApp(App).use(router).mount('#app')
+setupRouter(context)
+setupAPI(context)
+
+context.app.provide('context', context)
+
+context.app.mount('#app')

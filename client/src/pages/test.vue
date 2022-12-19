@@ -11,6 +11,8 @@ export default defineComponent({
 <template>
 	<ConstructPage class="test-page">
 		<h1>Test Page</h1>
+
+		<RouterView />
 	</ConstructPage>
 </template>
 

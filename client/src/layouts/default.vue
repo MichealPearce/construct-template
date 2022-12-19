@@ -1,8 +1,10 @@
 <script lang="ts">
+import { authed } from '@construct/client/middleware/authed'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
 	name: 'DefaultLayout',
+	middleware: [authed],
 })
 </script>
 
