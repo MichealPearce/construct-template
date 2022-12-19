@@ -43,5 +43,10 @@ export default defineConfig(env => {
 				directoryAsNamespace: true,
 			}),
 		],
+
+		build: {
+			outDir: '../dist/client',
+			emptyOutDir: true,
+		},
 	}
 })

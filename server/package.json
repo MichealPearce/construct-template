@@ -4,9 +4,14 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "vite",
+		"dev": "nodemon",
 		"build": "tsc && vite build",
 		"preview": "vite preview"
+	},
+	"nodemonConfig": {
+		"exec": "vite-node src/index.ts",
+		"ext": "ts,js,ejs",
+		"watch": "src/**/*"
 	},
 	"dependencies": {
 		"@construct/shared": "workspace:*",
