@@ -5,5 +5,10 @@
 		"shared",
 		"server",
 		"client"
-	]
+	],
+	"scripts": {
+		"shared": "yarn workspace @construct/shared",
+		"server": "yarn workspace @construct/server",
+		"client": "yarn workspace @construct/client"
+	}
 }
