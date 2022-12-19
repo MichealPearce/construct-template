@@ -2,19 +2,23 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-	name: 'IndexPage',
+	name: 'ConstructLayout',
 })
 </script>
 
 <script setup lang="ts"></script>
 
 <template>
-	<ConstructPage class="index-page">
-		<h1>Hello</h1>
-	</ConstructPage>
+	<div class="construct-layout">
+		<slot />
+	</div>
 </template>
 
 <style lang="scss" scoped>
-.index-page {
+.construct-layout {
+	width: 100%;
+	height: 100%;
+
+	overflow: hidden;
 }
 </style>

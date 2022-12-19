@@ -15,6 +15,15 @@ export default defineConfig(env => {
 		envDir: '../',
 		envPrefix: 'CLIENT_',
 
+		css: {
+			preprocessorOptions: {
+				scss: {
+					additionalData: '@import "sassy";',
+					includePaths: ['src'],
+				},
+			},
+		},
+
 		server: {
 			port: Number(clientURL.port),
 

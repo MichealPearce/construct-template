@@ -2,19 +2,24 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-	name: 'IndexPage',
+	name: 'ConstructPage',
 })
 </script>
 
 <script setup lang="ts"></script>
 
 <template>
-	<ConstructPage class="index-page">
-		<h1>Hello</h1>
-	</ConstructPage>
+	<div class="construct-page">
+		<slot />
+	</div>
 </template>
 
 <style lang="scss" scoped>
-.index-page {
+.construct-page {
+	width: 100%;
+	height: 100%;
+
+	overflow: hidden;
+	overflow-y: auto;
 }
 </style>

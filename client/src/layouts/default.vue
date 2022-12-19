@@ -9,9 +9,11 @@ export default defineComponent({
 <script setup lang="ts"></script>
 
 <template>
-	<div class="default-layout">
+	<ConstructLayout class="default-layout">
+		<NavigationMain />
+
 		<RouterView />
-	</div>
+	</ConstructLayout>
 </template>
 
 <style lang="scss" scoped>

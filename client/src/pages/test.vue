@@ -9,9 +9,9 @@ export default defineComponent({
 <script setup lang="ts"></script>
 
 <template>
-	<div class="test-page">
+	<ConstructPage class="test-page">
 		<h1>Test Page</h1>
-	</div>
+	</ConstructPage>
 </template>
 
 <style lang="scss" scoped>
