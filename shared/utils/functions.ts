@@ -66,3 +66,15 @@ export function defaultsDeep<A extends Record<any, any>, B extends A>(
 		return result
 	}, cloneDeep(main))
 }
+
+export function extract<A extends Record<any, any>, Key extends keyof A>(
+	target: A,
+	keys: Key[],
+): {
+	[key in Key]: A[key]
+} {
+	return keys.reduce((result: any, key) => {
+		if (key in target) result[key] = target[key]
+		return result
+	}, {})
+}

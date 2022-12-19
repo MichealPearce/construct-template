@@ -20,11 +20,13 @@ export async function registerAuthRoute(instance: FastifyInstance) {
 		const invalidError = new ServerError('invalid username or password', 401)
 		const { username, password } = request.body
 
+		console.log(username, password)
 		const user = await User.findOne({
 			where: {
 				name: username,
 			},
 			select: {
+				uuid: true,
 				name: true,
 				password: true,
 			},

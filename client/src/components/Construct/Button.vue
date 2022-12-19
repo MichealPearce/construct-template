@@ -2,21 +2,19 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-	name: 'TestPage',
+	name: 'ConstructButton',
 })
 </script>
 
 <script setup lang="ts"></script>
 
 <template>
-	<ConstructPage class="test-page">
-		<h1>Test Page</h1>
-
-		<RouterView />
-	</ConstructPage>
+	<button class="construct-button">
+		<slot />
+	</button>
 </template>
 
 <style lang="scss" scoped>
-.test-page {
+.construct-button {
 }
 </style>

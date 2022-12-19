@@ -7,6 +7,8 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    ConstructButton: typeof import('./../components/Construct/Button.vue')['default']
+    ConstructInput: typeof import('./../components/Construct/Input.vue')['default']
     ConstructLayout: typeof import('./../components/Construct/Layout.vue')['default']
     ConstructLink: typeof import('./../components/Construct/Link.vue')['default']
     ConstructPage: typeof import('./../components/Construct/Page.vue')['default']
