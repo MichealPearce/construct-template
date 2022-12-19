@@ -1,0 +1,9 @@
+{
+	"name": "@construct/template",
+	"packageManager": "yarn@3.3.0",
+	"workspaces": [
+		"shared",
+		"server",
+		"client"
+	]
+}
