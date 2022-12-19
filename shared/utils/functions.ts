@@ -7,13 +7,13 @@ export const sleep = (ms: number) =>
 	new Promise(resolve => setTimeout(resolve, ms))
 
 export function toEntries<A extends Record<any, any>>(
-	target: A
+	target: A,
 ): Entries<keyof A, A[keyof A]> {
 	return Object.entries(target) as any
 }
 
 export function fromEntries<A extends Record<any, any>>(
-	entries: Entries<keyof A, A[keyof A]>
+	entries: Entries<keyof A, A[keyof A]>,
 ): A {
 	return Object.fromEntries(entries) as any
 }
@@ -27,7 +27,7 @@ export function cloneDeep<A extends Record<any, any>>(target: A): A {
 		toEntries(target).map(([key, value]) => [
 			key,
 			isPrimitive(value) ? value : cloneDeep(value),
-		])
+		]),
 	)
 }
 

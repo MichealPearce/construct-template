@@ -122,7 +122,7 @@ export class JSONRequester extends Requester {
 	post<R = unknown>(
 		url: string,
 		body?: any,
-		config: RequesterConfig = {}
+		config: RequesterConfig = {},
 	): Promise<R> {
 		return this.request<R>(url, {
 			...config,
@@ -134,7 +134,7 @@ export class JSONRequester extends Requester {
 	put<R = unknown>(
 		url: string,
 		body?: any,
-		config: RequesterConfig = {}
+		config: RequesterConfig = {},
 	): Promise<R> {
 		return this.request<R>(url, {
 			...config,
@@ -146,7 +146,7 @@ export class JSONRequester extends Requester {
 	patch<R = unknown>(
 		url: string,
 		body?: any,
-		config: RequesterConfig = {}
+		config: RequesterConfig = {},
 	): Promise<R> {
 		return this.request<R>(url, {
 			...config,

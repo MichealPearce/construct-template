@@ -37,7 +37,7 @@ export function notObject<T>(thing: T): thing is Not<T, object> {
 
 export function inObject<T, Props extends string | number | symbol>(
 	thing: T,
-	props: Props[]
+	props: Props[],
 ): thing is Is<
 	T,
 	{
@@ -144,7 +144,7 @@ export function notBigInt<T>(thing: T): thing is Not<T, bigint> {
 }
 
 export function isPrimitive<T>(
-	thing: T
+	thing: T,
 ): thing is Is<T, string | number | boolean | symbol | bigint> {
 	return (
 		isString(thing) ||
@@ -156,7 +156,7 @@ export function isPrimitive<T>(
 }
 
 export function notPrimitive<T>(
-	thing: T
+	thing: T,
 ): thing is Not<T, string | number | boolean | symbol | bigint> {
 	return not(isPrimitive(thing))
 }
@@ -172,7 +172,7 @@ export function notIterable<T>(thing: T): thing is Not<T, Iterable<any>> {
 }
 
 export function isAsyncIterable<T>(
-	thing: T
+	thing: T,
 ): thing is Is<T, AsyncIterable<any>> {
 	return (
 		inObject(thing, [Symbol.asyncIterator]) &&
@@ -181,7 +181,7 @@ export function isAsyncIterable<T>(
 }
 
 export function notAsyncIterable<T>(
-	thing: T
+	thing: T,
 ): thing is Not<T, AsyncIterable<any>> {
 	return not(isAsyncIterable(thing))
 }

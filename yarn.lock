@@ -43,6 +43,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@construct/client@workspace:client"
   dependencies:
+    "@construct/shared": "workspace:*"
     "@vitejs/plugin-vue": ^4.0.0
     typescript: ^4.9.3
     vite: ^4.0.0
@@ -55,12 +56,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@construct/server@workspace:server"
   dependencies:
+    "@construct/shared": "workspace:*"
     typescript: ^4.9.3
     vite: ^4.0.0
   languageName: unknown
   linkType: soft
 
-"@construct/shared@workspace:shared":
+"@construct/shared@workspace:*, @construct/shared@workspace:shared":
   version: 0.0.0-use.local
   resolution: "@construct/shared@workspace:shared"
   dependencies:

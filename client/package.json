@@ -9,6 +9,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@construct/shared": "workspace:*",
 		"vue": "^3.2.45"
 	},
 	"devDependencies": {
