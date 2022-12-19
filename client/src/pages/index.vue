@@ -11,13 +11,26 @@ export default defineComponent({
 
 <script setup lang="ts">
 const auth = useAuth()
+
+async function login() {
+	try {
+		await auth.login({
+			username: 'test',
+			password: 'password',
+		})
+
+		console.log(auth.current)
+	} catch (error) {
+		console.error(error)
+	}
+}
 </script>
 
 <template>
 	<ConstructPage class="index-page">
 		<h1>Hello</h1>
 
-		<button @click="auth.login">Test</button>
+		<button @click="login">Test</button>
 	</ConstructPage>
 </template>
 
