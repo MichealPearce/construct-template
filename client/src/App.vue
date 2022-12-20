@@ -2,7 +2,7 @@
 	<RouterView />
 </template>
 
-<style>
+<style lang="scss">
 * {
 	box-sizing: border-box;
 }
@@ -15,6 +15,9 @@ body,
 
 	margin: 0;
 	padding: 0;
+
+	background-color: $color-background;
+	color: $color-text;
 
 	font-family: 'Fira Mono', monospace;
 	font-size: medium;

@@ -66,6 +66,11 @@ onBeforeMount(() => {
 <style lang="scss" scoped>
 .login-page {
 	@include flex(column, center, center);
+
+	form {
+		@include flex(column);
+		row-gap: 1em;
+	}
 }
 </style>
 

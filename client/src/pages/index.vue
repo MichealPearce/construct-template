@@ -21,7 +21,7 @@ async function login() {
 	<ConstructPage class="index-page">
 		<h1>Hello</h1>
 
-		<button @click="login">Test</button>
+		<ConstructButton @click="login">Test</ConstructButton>
 	</ConstructPage>
 </template>
 

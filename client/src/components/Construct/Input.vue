@@ -40,5 +40,9 @@ const inputProps = computed(() =>
 
 <style lang="scss" scoped>
 .construct-input {
+	input {
+		padding: 0.5em;
+		border-radius: $border-radius;
+	}
 }
 </style>

@@ -22,7 +22,7 @@ const isAdmin = computed(() =>
 			<h1 class="brand-name">Construct</h1>
 		</div>
 
-		<menu>
+		<div class="menu">
 			<ConstructLink to="/">Home</ConstructLink>
 
 			<ConstructLink
@@ -44,7 +44,7 @@ const isAdmin = computed(() =>
 			>
 				Login
 			</ConstructLink>
-		</menu>
+		</div>
 	</nav>
 </template>
 
@@ -52,5 +52,17 @@ const isAdmin = computed(() =>
 .navigation-main {
 	@include flex(row, space-between, center);
 	width: 100%;
+
+	.branding {
+		padding: 0px 1em;
+	}
+
+	.menu {
+		@include flex(row, flex-end, center);
+
+		.construct-link {
+			padding: 0.5em 1em;
+		}
+	}
 }
 </style>

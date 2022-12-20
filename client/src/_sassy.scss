@@ -1,3 +1,11 @@
+$color-primary: #d32f2f;
+$color-primary-text: white;
+
+$color-background: #212121;
+$color-text: white;
+
+$border-radius: 5px;
+
 @mixin flex($direction: row, $justify: flex-start, $align: flex-start) {
 	display: flex;
 	flex-direction: $direction;
