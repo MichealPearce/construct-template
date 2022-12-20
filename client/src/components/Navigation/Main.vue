@@ -20,9 +20,18 @@ const auth = useAuth()
 		<menu>
 			<ConstructLink to="/">Home</ConstructLink>
 
-			<template v-if="auth.current">
-				{{ auth.current.name }}
-			</template>
+			<ConstructLink
+				v-if="auth.current"
+				to="/login?logout=true"
+			>
+				Logout
+			</ConstructLink>
+			<ConstructLink
+				v-else
+				to="/login"
+			>
+				Login
+			</ConstructLink>
 		</menu>
 	</nav>
 </template>

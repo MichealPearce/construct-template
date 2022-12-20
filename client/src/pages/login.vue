@@ -1,6 +1,7 @@
 <script lang="ts">
 import { useAuth } from '@construct/client/stores/auth'
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, onBeforeMount, reactive } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 export default defineComponent({
 	name: 'LoginPage',
@@ -9,6 +10,8 @@ export default defineComponent({
 
 <script setup lang="ts">
 const auth = useAuth()
+const router = useRouter()
+const route = useRoute()
 
 const creds = reactive({
 	username: '',
@@ -18,12 +21,22 @@ const creds = reactive({
 async function login() {
 	try {
 		await auth.login(creds)
-		console.log(auth.current)
+
+		router.push('/')
 	} catch (error) {
 		console.log('failed login', error)
 		alert('invalid username or password')
 	}
 }
+
+onBeforeMount(() => {
+	if (route.query.logout)
+		return auth.logout().finally(() => {
+			window.location.href = '/login'
+		})
+
+	if (auth.current) router.push('/')
+})
 </script>
 
 <template>
@@ -52,5 +65,14 @@ async function login() {
 
 <style lang="scss" scoped>
 .login-page {
+	@include flex(column, center, center);
 }
 </style>
+
+<route>
+{
+	meta: {
+		layout: 'no-layout',
+	},
+}
+</route>

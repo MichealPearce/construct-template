@@ -20,7 +20,6 @@ export async function registerAuthRoute(instance: FastifyInstance) {
 		const invalidError = new ServerError('invalid username or password', 401)
 		const { username, password } = request.body
 
-		console.log(username, password)
 		const user = await User.findOne({
 			where: {
 				name: username,
@@ -47,5 +46,9 @@ export async function registerAuthRoute(instance: FastifyInstance) {
 
 		request.session.set('user', fulluser)
 		return fulluser
+	})
+
+	instance.delete('/auth', request => {
+		return request.session.destroy().then(() => ({ success: true }))
 	})
 }
