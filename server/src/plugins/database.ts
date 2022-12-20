@@ -11,7 +11,7 @@ export async function registerDatabase(instance: FastifyInstance) {
 		database: resolve(__BIN_ROOT__, 'database.sqlite'),
 		entities: [User, UserRole],
 		synchronize: true,
-		logging: true,
+		// logging: true,
 	})
 
 	try {
@@ -27,22 +27,26 @@ export async function registerDatabase(instance: FastifyInstance) {
 }
 
 async function setupRootUser() {
+	console.info('checking for admin role')
 	const adminRole = await UserRole.findOneByOrFail({
 		name: 'admin',
-	}).catch(() =>
-		UserRole.init({
+	}).catch(() => {
+		console.info('creating admin role')
+		return UserRole.init({
 			name: 'admin',
-		}).save(),
-	)
+		}).save()
+	})
 
+	console.info('checking for root user')
 	await User.findOneByOrFail({
 		name: 'root',
-	}).catch(async () =>
-		User.init({
+	}).catch(async () => {
+		console.info('creating root user')
+		return User.init({
 			name: 'root',
 			email: 'root@localhost.com',
 			password: await hashPassword('root'),
 			roles: [adminRole],
-		}).save(),
-	)
+		}).save()
+	})
 }

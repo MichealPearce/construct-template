@@ -1,6 +1,7 @@
 <script lang="ts">
 import { useAuth } from '@construct/client/stores/auth'
-import { defineComponent } from 'vue'
+import { isAdminUser } from '@construct/shared'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
 	name: 'NavigationMain',
@@ -9,6 +10,10 @@ export default defineComponent({
 
 <script setup lang="ts">
 const auth = useAuth()
+
+const isAdmin = computed(() =>
+	auth.current ? isAdminUser(auth.current) : false,
+)
 </script>
 
 <template>
@@ -19,6 +24,13 @@ const auth = useAuth()
 
 		<menu>
 			<ConstructLink to="/">Home</ConstructLink>
+
+			<ConstructLink
+				v-if="isAdmin"
+				to="/admin"
+			>
+				Admin
+			</ConstructLink>
 
 			<ConstructLink
 				v-if="auth.current"

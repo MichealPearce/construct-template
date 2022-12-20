@@ -1,4 +1,4 @@
-import { Entries } from '../types'
+import { Entries, UserData } from '../types'
 import { isArray, isObject, isPrimitive, not } from './is'
 
 export const noop = (): void => undefined
@@ -77,4 +77,8 @@ export function extract<A extends Record<any, any>, Key extends keyof A>(
 		if (key in target) result[key] = target[key]
 		return result
 	}, {})
+}
+
+export function isAdminUser(user: UserData) {
+	return user.roles.some(role => role.name === 'admin')
 }

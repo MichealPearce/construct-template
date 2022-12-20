@@ -1,4 +1,7 @@
+import { useContext } from '@construct/client/includes/functions'
+import { useAuth } from '@construct/client/stores/auth'
 import { ClientContext } from '@construct/client/types'
+import { noop } from '@construct/shared'
 import axios, { AxiosInstance } from 'axios'
 
 declare module '@construct/client/types' {
@@ -7,7 +10,7 @@ declare module '@construct/client/types' {
 	}
 }
 
-export function setupAPI(context: ClientContext) {
+export async function setupAPI(context: ClientContext) {
 	const baseURL = new URL('/api', import.meta.env.CLIENT_URL).href
 
 	const api = axios.create({
@@ -16,4 +19,11 @@ export function setupAPI(context: ClientContext) {
 
 	context.api = api
 	context.app.provide('api', api)
+
+	const auth = useAuth(context)
+	await auth.fetch().catch(noop)
+}
+
+export function useAPI(context: ClientContext = useContext()) {
+	return context.api
 }

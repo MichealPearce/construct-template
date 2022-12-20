@@ -1,6 +1,6 @@
 <script lang="ts">
 import { authed } from '@construct/client/middleware/authed'
-import { useAuth } from '@construct/client/stores/auth'
+import { useAPI } from '@construct/client/plugins/api'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -10,19 +10,10 @@ export default defineComponent({
 </script>
 
 <script setup lang="ts">
-const auth = useAuth()
+const api = useAPI()
 
 async function login() {
-	try {
-		await auth.login({
-			username: 'test',
-			password: 'password',
-		})
-
-		console.log(auth.current)
-	} catch (error) {
-		console.error(error)
-	}
+	api.get('users?page=asd').then(console.log).catch(console.error)
 }
 </script>
 

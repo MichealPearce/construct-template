@@ -9,9 +9,12 @@ const context = {
 	state: reactive({}),
 } as ClientContext
 
-setupRouter(context)
-setupAPI(context)
+async function mount() {
+	context.app.provide('context', context)
+	await setupAPI(context)
+	setupRouter(context)
 
-context.app.provide('context', context)
+	context.app.mount('#app')
+}
 
-context.app.mount('#app')
+mount()

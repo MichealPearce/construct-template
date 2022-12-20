@@ -8,11 +8,5 @@ export const authed = defineMiddleware(async function (to, from, context) {
 	const isLoginPage = to.fullPath.startsWith('/login')
 	const isNotLoginPage = !isLoginPage
 
-	if (isLoggedOut && isNotLoginPage) {
-		try {
-			await auth.fetch()
-		} catch {
-			return '/login'
-		}
-	}
+	if (isLoggedOut && isNotLoginPage) return '/login'
 })
