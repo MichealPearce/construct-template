@@ -1,4 +1,5 @@
 import { registerAPI } from '@construct/server/api'
+import { SessionStore } from '@construct/server/includes/SessionStore'
 import { registerClient } from '@construct/server/plugins/client'
 import { registerDatabase } from '@construct/server/plugins/database'
 import fastifyCookie from '@fastify/cookie'
@@ -21,6 +22,7 @@ async function start() {
 				httpOnly: true,
 				secure: false,
 			},
+			store: new SessionStore(),
 		})
 		.register(registerAPI, {
 			prefix: '/api',

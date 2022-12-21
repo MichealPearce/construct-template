@@ -22,7 +22,8 @@ async function login() {
 	try {
 		await auth.login(creds)
 
-		router.push('/')
+		if (route.query.redirect) router.push(route.query.redirect as string)
+		else router.push('/')
 	} catch (error) {
 		console.log('failed login', error)
 		alert('invalid username or password')

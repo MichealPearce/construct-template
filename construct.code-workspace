@@ -13,5 +13,15 @@
 			"path": "client"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"typescript.tsdk": "construct-template/node_modules/typescript/lib",
+		"sqltools.connections": [
+			{
+				"previewLimit": 50,
+				"driver": "SQLite",
+				"name": "devdb",
+				"database": "bin/database.sqlite"
+			}
+		]
+	}
 }

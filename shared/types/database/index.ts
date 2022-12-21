@@ -1,4 +1,4 @@
-export type BaseModelData = Record<string, any>
+export type BaseModelData = object
 
 export interface ModelData extends BaseModelData {
 	created: Date | string

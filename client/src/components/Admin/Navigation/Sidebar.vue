@@ -27,8 +27,8 @@ export default defineComponent({
 .admin-navigation-sidebar {
 	@include flex(column);
 	min-width: 200px;
-	width: 30%;
-	max-width: 300px;
+	width: 20%;
+	max-width: 250px;
 	height: 100%;
 
 	background-color: darken($color-background, 20%);
