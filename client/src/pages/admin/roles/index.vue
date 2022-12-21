@@ -2,19 +2,19 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-	name: 'AdminIndexPage',
+	name: 'AdminRolesIndexPage',
 })
 </script>
 
 <script setup lang="ts"></script>
 
 <template>
-	<ConstructPage class="admin-index-page">
-		<h1>Dashboard</h1>
+	<ConstructPage class="admin-roles-index-page">
+		<h1>Roles</h1>
 	</ConstructPage>
 </template>
 
 <style lang="scss" scoped>
-.admin-index-page {
+.admin-roles-index-page {
 }
 </style>

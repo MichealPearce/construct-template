@@ -2,7 +2,7 @@ $color-primary: #d32f2f;
 $color-primary-text: white;
 
 $color-background: #212121;
-$color-text: white;
+$color-text: invert($color-background);
 
 $border-radius: 5px;
 

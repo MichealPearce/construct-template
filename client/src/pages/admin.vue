@@ -13,3 +13,11 @@ export default defineComponent({
 <template>
 	<RouterView />
 </template>
+
+<route>
+{
+	meta: {
+		layout: 'admin'
+	}
+}
+</route>

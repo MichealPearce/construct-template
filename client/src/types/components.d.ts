@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AdminNavigationSidebar: typeof import('./../components/Admin/Navigation/Sidebar.vue')['default']
     ConstructButton: typeof import('./../components/Construct/Button.vue')['default']
     ConstructInput: typeof import('./../components/Construct/Input.vue')['default']
     ConstructLayout: typeof import('./../components/Construct/Layout.vue')['default']

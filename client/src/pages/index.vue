@@ -13,7 +13,7 @@ export default defineComponent({
 const api = useAPI()
 
 async function login() {
-	api.get('users?page=asd').then(console.log).catch(console.error)
+	api.get('users').then(console.log).catch(console.error)
 }
 </script>
 

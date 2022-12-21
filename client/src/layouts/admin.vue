@@ -2,19 +2,22 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-	name: 'AdminIndexPage',
+	name: 'AdminLayout',
 })
 </script>
 
 <script setup lang="ts"></script>
 
 <template>
-	<ConstructPage class="admin-index-page">
-		<h1>Dashboard</h1>
-	</ConstructPage>
+	<ConstructLayout class="admin-layout">
+		<AdminNavigationSidebar />
+
+		<RouterView />
+	</ConstructLayout>
 </template>
 
 <style lang="scss" scoped>
-.admin-index-page {
+.admin-layout {
+	@include flex(row);
 }
 </style>
