@@ -5,7 +5,7 @@ import { computed, defineComponent, onBeforeMount, reactive } from 'vue'
 import { RouterView } from 'vue-router'
 
 export default defineComponent({
-	name: 'AdminUsersPage',
+	name: 'AdminUsersLayout',
 })
 </script>
 

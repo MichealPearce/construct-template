@@ -26,7 +26,7 @@ export async function registerUsersRoute(instance: FastifyInstance) {
 			const take = Math.max(1, opts.limit)
 			const users = await User.find({ skip, take })
 
-			if (not(users.length)) return new ServerError('page not found', 404)
+			if (not(users.length)) throw new ServerError('page not found', 404)
 
 			return users
 		},
