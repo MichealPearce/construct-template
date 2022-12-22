@@ -35,19 +35,42 @@ export async function registerUsersRoute(instance: FastifyInstance) {
 	// TODO: add password confirmation check
 	// TODO: add validators for inputs
 	instance.route<{
-		Body: Pick<UserData, 'name' | 'email' | 'password'>
+		Body: Pick<UserData, 'name' | 'display_name' | 'email' | 'password'>
 	}>({
 		method: 'POST',
 		url: '/users',
 		onRequest: [isAdmin],
 		async handler(request, _reply) {
-			const { name, email } = request.body
+			const { name, email, display_name } = request.body
 			const password = await hashPassword(request.body.password!)
 
-			const user = await User.init({ name, email, password }).save()
+			const user = await User.init({
+				name,
+				display_name,
+				email,
+				password,
+			}).save()
 
 			// because user was initialized with a password, we need to delete it
 			delete user.password
+			return user
+		},
+	})
+
+	instance.route<{
+		Params: {
+			uuid: string
+		}
+	}>({
+		method: 'GET',
+		url: '/users/:uuid',
+		onRequest: [authed],
+		async handler(request, _reply) {
+			const user = await User.findOneBy({
+				uuid: request.params.uuid,
+			})
+
+			if (not(user)) throw new ServerError('user not found', 404)
 			return user
 		},
 	})

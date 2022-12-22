@@ -8,6 +8,9 @@ export class UserRole extends Model<UserRoleData> implements UserRoleData {
 	@Column('varchar', { length: 255, primary: true })
 	declare name: string
 
+	@Column('varchar', { length: 255 })
+	declare display_name: string
+
 	@ManyToMany(() => User, user => user.roles)
 	@JoinTable()
 	declare users?: User[]

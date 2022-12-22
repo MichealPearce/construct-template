@@ -2,7 +2,7 @@
 import { useUsers } from '@construct/client/stores/users'
 import { UserData } from '@construct/shared'
 import { computed, defineComponent, onBeforeMount, reactive } from 'vue'
-import { RouterView } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
 
 export default defineComponent({
 	name: 'AdminUsersLayout',
@@ -10,6 +10,7 @@ export default defineComponent({
 </script>
 
 <script setup lang="ts">
+const route = useRoute()
 const users = useUsers()
 
 const state = reactive<{
@@ -57,15 +58,20 @@ onBeforeMount(list)
 				</ConstructLink>
 			</header>
 
-			<ConstructLink
-				v-for="user of items"
-				:to="`/admin/users/${user.uuid}`"
-			>
-				{{ user.name }}
-			</ConstructLink>
+			<div class="items">
+				<ConstructLink
+					v-for="user of items"
+					:to="`/admin/users/${user.uuid}`"
+					class="item"
+				>
+					<ConstructButton>
+						{{ user.name }}
+					</ConstructButton>
+				</ConstructLink>
+			</div>
 		</div>
 
-		<RouterView />
+		<RouterView :key="route.path" />
 	</ConstructLayout>
 </template>
 
@@ -88,6 +94,23 @@ onBeforeMount(list)
 			@include flex(row, space-between, center);
 			width: 100%;
 			padding: 0.5em;
+		}
+
+		.items {
+			@include flex(column);
+			row-gap: 1em;
+			width: 100%;
+			padding: 1em;
+
+			.item {
+				width: 100%;
+
+				.construct-button {
+					@include flex(row, space-between, center);
+					width: 100%;
+					text-transform: capitalize;
+				}
+			}
 		}
 	}
 }

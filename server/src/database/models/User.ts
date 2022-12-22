@@ -8,6 +8,9 @@ export class User extends ModelUUID<UserData> implements UserData {
 	@Column('varchar', { length: 255, primary: true })
 	declare name: string
 
+	@Column('varchar', { length: 255 })
+	declare display_name: string
+
 	@Column('varchar', { length: 255, unique: true })
 	declare email: string
 

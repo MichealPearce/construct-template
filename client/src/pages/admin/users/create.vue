@@ -12,6 +12,7 @@ const users = useUsers()
 
 const data = reactive({
 	name: '',
+	display_name: '',
 	email: '',
 	password: '',
 })
@@ -34,6 +35,11 @@ async function create() {
 			<ConstructInput
 				v-model="data.name"
 				placeholder="Name"
+				type="text"
+			/>
+			<ConstructInput
+				v-model="data.display_name"
+				placeholder="Display Name"
 				type="text"
 			/>
 			<ConstructInput

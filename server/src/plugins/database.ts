@@ -35,6 +35,7 @@ async function setupRootUser() {
 		console.info('creating admin role')
 		return UserRole.init({
 			name: 'admin',
+			display_name: 'Admin',
 		}).save()
 	})
 
@@ -45,6 +46,7 @@ async function setupRootUser() {
 		console.info('creating root user')
 		return User.init({
 			name: 'root',
+			display_name: '[ROOT]',
 			email: 'root@localhost.com',
 			password: await hashPassword('root'),
 			roles: [adminRole],

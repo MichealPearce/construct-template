@@ -17,15 +17,17 @@ export interface ModelUUIDData extends ModelData {
 export interface UserData extends ModelUUIDData {
 	name: string
 	email: string
+	display_name: string
 	password?: string
 	roles: UserRoleData[]
+}
+
+export interface UserRoleData extends ModelData {
+	name: string
+	display_name: string
 }
 
 export interface AppSessionData extends ModelData {
 	id: string
 	data: Record<string, any>
-}
-
-export interface UserRoleData extends ModelData {
-	name: string
 }
