@@ -1,45 +1,48 @@
 import { UserRole } from '@construct/server/database/models/UserRole'
+import { createRoute, Endpoint } from '@construct/server/includes/Endpoint'
 import { authed } from '@construct/server/middleware/authed'
 import { isAdmin } from '@construct/server/middleware/isAdmin'
 import { defaults, not, ServerError } from '@construct/shared'
-import { FastifyInstance } from 'fastify'
 
-export async function registerUserRolesRoute(instance: FastifyInstance) {
-	instance.route<{
-		Querystring: {
-			page?: number
-			limit?: number
-		}
-	}>({
-		method: 'GET',
-		url: '/users/roles',
-		onRequest: [authed],
-		async handler(request, reply) {
-			const opts = defaults(request.query, {
-				page: 0,
-				limit: 10,
-			})
+export const userRolesRoute = createRoute('/users/roles')
 
-			const skip = Math.max(0, (opts.page - 1) * opts.limit)
-			const take = Math.max(1, opts.limit)
-			const roles = await UserRole.find({ skip, take })
+@userRolesRoute.endpoint('GET')
+export class UserRolesListEndpoint extends Endpoint<{
+	query: {
+		page?: number
+		limit?: number
+	}
+}> {
+	static onRequest = [authed]
 
-			if (not(roles.length)) throw new ServerError('page not found', 404)
-			return roles
-		},
-	})
+	get opts() {
+		return defaults(this.request.query, {
+			page: 0,
+			limit: 10,
+		})
+	}
 
-	instance.route<{
-		Body: {
-			name: string
-		}
-	}>({
-		method: 'POST',
-		url: '/users/roles',
-		onRequest: [isAdmin],
-		handler(request, reply) {
-			const { name } = request.body
-			return UserRole.init({ name }).save()
-		},
-	})
+	async handle() {
+		const opts = this.opts
+		const skip = Math.max(0, (opts.page - 1) * opts.limit)
+		const take = Math.max(1, opts.limit)
+		const roles = await UserRole.find({ skip, take })
+
+		if (not(roles.length)) throw new ServerError('page not found', 404)
+		return roles
+	}
+}
+
+@userRolesRoute.endpoint('POST')
+export class UserRolesCreateEndpoint extends Endpoint<{
+	body: {
+		name: string
+	}
+}> {
+	static onRequest = [isAdmin]
+
+	async handle() {
+		const { name } = this.request.body
+		return UserRole.init({ name }).save()
+	}
 }

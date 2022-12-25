@@ -1,4 +1,5 @@
 import { User } from '@construct/server/database/models/User'
+import { createRoute, Endpoint } from '@construct/server/includes/Endpoint'
 import { hashPassword } from '@construct/server/includes/functions'
 import { authed } from '@construct/server/middleware/authed'
 import { isAdmin } from '@construct/server/middleware/isAdmin'
@@ -6,72 +7,73 @@ import { not, ServerError, UserData } from '@construct/shared'
 import { defaults } from '@construct/shared/utils/functions'
 import { FastifyInstance } from 'fastify'
 
-export async function registerUsersRoute(instance: FastifyInstance) {
-	instance.route<{
-		Querystring: {
-			page?: number
-			limit?: number
-		}
-	}>({
-		method: 'GET',
-		url: '/users',
-		onRequest: [authed],
-		async handler(request, _reply) {
-			const opts = defaults(request.query, {
-				page: 0,
-				limit: 10,
-			})
+export const usersRoute = createRoute('/users')
 
-			const skip = Math.max(0, (opts.page - 1) * opts.limit)
-			const take = Math.max(1, opts.limit)
-			const users = await User.find({ skip, take })
+@usersRoute.endpoint('GET')
+export class UsersGETEndpoint extends Endpoint<{
+	query: {
+		page?: number
+		limit?: number
+	}
+}> {
+	static onRequest = [authed]
 
-			if (not(users.length)) throw new ServerError('page not found', 404)
+	get opts() {
+		return defaults(this.request.query, {
+			page: 0,
+			limit: 10,
+		})
+	}
 
-			return users
-		},
-	})
+	async handle() {
+		const opts = this.opts
+		const skip = Math.max(0, (opts.page - 1) * opts.limit)
+		const take = Math.max(1, opts.limit)
+		const users = await User.find({ skip, take })
 
-	// TODO: add password confirmation check
-	// TODO: add validators for inputs
-	instance.route<{
-		Body: Pick<UserData, 'name' | 'display_name' | 'email' | 'password'>
-	}>({
-		method: 'POST',
-		url: '/users',
-		onRequest: [isAdmin],
-		async handler(request, _reply) {
-			const { name, email, display_name } = request.body
-			const password = await hashPassword(request.body.password!)
+		if (not(users.length)) throw new ServerError('page not found', 404)
 
-			const user = await User.init({
-				name,
-				display_name,
-				email,
-				password,
-			}).save()
+		return users
+	}
+}
 
-			// because user was initialized with a password, we need to delete it
-			delete user.password
-			return user
-		},
-	})
+@usersRoute.endpoint('POST')
+export class UsersPOSTEndpoint extends Endpoint<{
+	body: Pick<UserData, 'name' | 'display_name' | 'email' | 'password'>
+}> {
+	static onRequest = [isAdmin]
 
-	instance.route<{
-		Params: {
-			uuid: string
-		}
-	}>({
-		method: 'GET',
-		url: '/users/:uuid',
-		onRequest: [authed],
-		async handler(request, _reply) {
-			const user = await User.findOneBy({
-				uuid: request.params.uuid,
-			})
+	async handle() {
+		const { name, email, display_name } = this.request.body
+		const password = await hashPassword(this.request.body.password!)
 
-			if (not(user)) throw new ServerError('user not found', 404)
-			return user
-		},
-	})
+		const user = await User.init({
+			name,
+			display_name,
+			email,
+			password,
+		}).save()
+
+		// because user was initialized with a password, we need to delete it
+		delete user.password
+		return user
+	}
+}
+
+@usersRoute.endpoint('GET', '/:uuid')
+export class UsersGETUUIDEndpoint extends Endpoint<{
+	params: {
+		uuid: string
+	}
+}> {
+	static onRequest = [authed]
+
+	async handle() {
+		const user = await User.findOneBy({
+			uuid: this.request.params.uuid,
+		})
+
+		if (not(user)) throw new ServerError('user not found', 404)
+		return user
+	}
 }

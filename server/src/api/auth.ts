@@ -1,24 +1,27 @@
 import { User } from '@construct/server/database/models/User'
+import { createRoute, Endpoint } from '@construct/server/includes/Endpoint'
 import { comparePassword } from '@construct/server/includes/functions'
 import { ServerError } from '@construct/shared'
-import { FastifyInstance } from 'fastify'
 
-export async function registerAuthRoute(instance: FastifyInstance) {
-	instance.get('/auth', request => {
-		const user = request.session.get('user')
+export const authRoute = createRoute('/auth')
+
+@authRoute.endpoint('GET')
+export class AuthGETEndpoint extends Endpoint {
+	handle() {
+		const user = this.authed
 
 		if (!user) throw new ServerError('not logged in', 401)
 		return user
-	})
+	}
+}
 
-	instance.post<{
-		Body: {
-			username: string
-			password: string
-		}
-	}>('/auth', async request => {
+@authRoute.endpoint('POST')
+export class AuthPOSTEndpoint extends Endpoint<{
+	body: { username: string; password: string }
+}> {
+	async handle() {
 		const invalidError = new ServerError('invalid username or password', 401)
-		const { username, password } = request.body
+		const { username, password } = this.request.body
 
 		const user = await User.findOne({
 			where: {
@@ -32,7 +35,7 @@ export async function registerAuthRoute(instance: FastifyInstance) {
 		})
 
 		if (!user) {
-			console.info('user not found', username)
+			this.console.info('user not found: %s', username)
 			throw invalidError
 		}
 
@@ -44,11 +47,14 @@ export async function registerAuthRoute(instance: FastifyInstance) {
 			name: username,
 		})
 
-		request.session.set('user', fulluser)
+		this.authed = fulluser
 		return fulluser
-	})
+	}
+}
 
-	instance.delete('/auth', request => {
-		return request.session.destroy().then(() => ({ success: true }))
-	})
+@authRoute.endpoint('DELETE')
+export class AuthDELETEEndpoint extends Endpoint {
+	handle() {
+		return this.session.destroy().then(() => ({ success: true }))
+	}
 }
