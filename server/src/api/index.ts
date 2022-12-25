@@ -14,7 +14,7 @@ export async function registerAPI(instance: FastifyInstance) {
 			cookieName: 'construct-session',
 			cookie: {
 				httpOnly: true,
-				secure: false,
+				secure: import.meta.env.PROD,
 			},
 			store: new SessionStore(),
 		})
