@@ -61,6 +61,7 @@ export abstract class Endpoint<
 	}
 
 	constructor(
+		protected readonly instance: FastifyInstance,
 		protected readonly request: EndpointRequest<Def>,
 		protected readonly reply: EndpointReply<Def>,
 	) {}
@@ -82,7 +83,7 @@ export function createRoute(path: string) {
 			Target.method = method
 			Target.url = subPath ? join(path, subPath) : path
 			Target.handler = async function (request: any, reply: any) {
-				const endpoint = new Target(request, reply)
+				const endpoint = new Target(this, request, reply)
 				return endpoint.handle()
 			}
 
@@ -94,7 +95,7 @@ export function createRoute(path: string) {
 		for (const Endpoint of endpoints) {
 			if (Endpoint.register) await Endpoint.register(instance)
 
-			console.log(`Registering ${Endpoint.method} ${Endpoint.url}`)
+			instance.log.info(`Registering ${Endpoint.method} ${Endpoint.url}`)
 			instance.route(Endpoint)
 		}
 	}

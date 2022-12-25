@@ -1,6 +1,7 @@
 import { registerAPI } from '@construct/server/api'
 import { registerClient } from '@construct/server/plugins/client'
 import { registerDatabase } from '@construct/server/plugins/database'
+import { registerMailer } from '@construct/server/plugins/mailer'
 import fastify from 'fastify'
 
 async function start() {
@@ -10,6 +11,7 @@ async function start() {
 	})
 
 	await registerDatabase(app)
+	await registerMailer(app)
 
 	await app
 		.register(registerAPI, {

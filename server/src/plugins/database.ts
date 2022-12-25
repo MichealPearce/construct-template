@@ -16,11 +16,11 @@ export async function registerDatabase(instance: FastifyInstance) {
 	})
 
 	try {
-		console.log('connecting to database...')
+		instance.log.info('connecting to database...')
 		await source.initialize()
-		console.log('connected to database')
+		instance.log.info('connected to database')
 	} catch (error) {
-		console.error('failed to connect to database', error)
+		instance.log.error('failed to connect to database', error)
 	}
 
 	instance.decorate('database', source)
