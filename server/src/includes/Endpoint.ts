@@ -4,10 +4,10 @@ import {
 	FastifyReply,
 	FastifyRequest,
 	HTTPMethods,
+	onRequestHookHandler,
 	RawReplyDefaultExpression,
 	RawRequestDefaultExpression,
 	RawServerDefault,
-	RouteGenericInterface,
 } from 'fastify'
 import { join } from 'path'
 
@@ -39,6 +39,8 @@ export abstract class Endpoint<
 	declare static method: HTTPMethods
 	declare static url: string
 	declare static handler: FunctionType
+
+	declare static onRequest?: onRequestHookHandler | onRequestHookHandler[]
 
 	static register?(instance: FastifyInstance): void
 

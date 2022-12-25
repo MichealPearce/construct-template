@@ -5,7 +5,6 @@ import { authed } from '@construct/server/middleware/authed'
 import { isAdmin } from '@construct/server/middleware/isAdmin'
 import { not, ServerError, UserData } from '@construct/shared'
 import { defaults } from '@construct/shared/utils/functions'
-import { FastifyInstance } from 'fastify'
 
 export const usersRoute = createRoute('/users')
 
