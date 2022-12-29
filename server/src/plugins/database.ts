@@ -2,6 +2,7 @@ import { AppSession } from '@construct/server/database/models/AppSession'
 import { User } from '@construct/server/database/models/User'
 import { UserRole } from '@construct/server/database/models/UserRole'
 import { hashPassword } from '@construct/server/includes/functions'
+import { ConstructError } from '@construct/shared'
 import { FastifyInstance } from 'fastify'
 import { resolve } from 'path'
 import { DataSource } from 'typeorm'
@@ -20,7 +21,7 @@ export async function registerDatabase(instance: FastifyInstance) {
 		await source.initialize()
 		instance.log.info('connected to database')
 	} catch (error) {
-		instance.log.error('failed to connect to database', error)
+		throw new ConstructError('failed to connect to database', error)
 	}
 
 	instance.decorate('database', source)
