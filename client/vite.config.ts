@@ -12,9 +12,15 @@ export default defineConfig(env => {
 	const clientURL = new URL(envars.CLIENT_URL ?? 'http://localhost:3000')
 	const serverURL = new URL(envars.SERVER_URL ?? 'http://localhost:3001')
 
+	const apiURL = env.mode === 'development' ? clientURL.href : serverURL.href
+
 	return {
 		envDir: '../',
 		envPrefix: 'CLIENT_',
+
+		define: {
+			__API_URL__: `"${apiURL}"`,
+		},
 
 		resolve: {
 			alias: {

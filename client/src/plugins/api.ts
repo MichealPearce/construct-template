@@ -11,7 +11,7 @@ declare module '@construct/client/types' {
 }
 
 export async function setupAPI(context: ClientContext) {
-	const baseURL = new URL('/api', import.meta.env.CLIENT_URL).href
+	const baseURL = new URL('/api', __API_URL__).href
 
 	const api = axios.create({
 		baseURL,
