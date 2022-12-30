@@ -3,19 +3,23 @@ import { FunctionType } from '../types'
 export type Is<Thing, Match> = Thing extends Match ? Thing : never
 export type Not<Thing, Match> = Thing extends Match ? never : Thing
 
-export function is(condition: any): boolean {
+export function is<Thing, Match>(
+	condition: any,
+): condition is Is<Thing, Match> {
 	return !!condition
 }
 
-export function not(condition: any): boolean {
+export function not<Thing, Match>(
+	condition: any,
+): condition is Not<Thing, Match> {
 	return !condition
 }
 
-export function isDefined<T>(thing: T): thing is Is<T, undefined> {
+export function isDefined<T>(thing: T): thing is Not<T, undefined> {
 	return typeof thing !== 'undefined'
 }
 
-export function notDefined<T>(thing: T): thing is Not<T, undefined> {
+export function notDefined<T>(thing: T): thing is Is<T, undefined> {
 	return typeof thing === 'undefined'
 }
 

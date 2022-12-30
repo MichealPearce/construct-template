@@ -22,6 +22,9 @@
 				"name": "devdb",
 				"database": "bin/database.sqlite"
 			}
-		]
+		],
+		"explorer.fileNesting.patterns": {
+			"*.ts": "${capture}.js,${capture}.ejs"
+		}
 	}
 }
