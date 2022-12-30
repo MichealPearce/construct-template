@@ -1,11 +1,11 @@
 import { defineStore } from '@construct/client/includes/functions'
-import { UserData } from '@construct/shared'
+import {
+	LoginCreds,
+	RegisterData,
+	UserData,
+	UserRegistrationData,
+} from '@construct/shared'
 import { ref } from 'vue'
-
-export type LoginCreds = {
-	username: string
-	password: string
-}
 
 export const useAuth = defineStore('auth', context => {
 	const { api } = context
@@ -29,10 +29,27 @@ export const useAuth = defineStore('auth', context => {
 		current.value = null
 	}
 
+	function register(data: RegisterData) {
+		return api
+			.post<UserRegistrationData>('auth/register', data)
+			.then(res => res.data)
+	}
+
+	async function verifyRegistration(uuid: string) {
+		const user = await api
+			.post<UserData>('auth/verify', { uuid })
+			.then(res => res.data)
+
+		current.value = user
+		return current.value
+	}
+
 	return {
 		current,
 		fetch,
 		login,
 		logout,
+		register,
+		verifyRegistration,
 	}
 })
