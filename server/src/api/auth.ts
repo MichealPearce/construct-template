@@ -106,6 +106,8 @@ export class AuthVerifyEndpoint extends Endpoint<{
 		}
 
 		await registration.remove()
+
+		this.authed = user
 		return user
 	}
 }
