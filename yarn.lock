@@ -90,6 +90,7 @@ __metadata:
     typescript: ^4.9.3
     vite: ^4.0.0
     vite-node: ^0.26.0
+    vite-plugin-ejs-importer: ^1.0.5
     vite-plugin-node: ^1.0.0
   languageName: unknown
   linkType: soft
@@ -4667,6 +4668,15 @@ __metadata:
   bin:
     vite-node: vite-node.mjs
   checksum: a938cc96a297f75841564210e6b18c0c56dab8c59eb944cef8435a4a3c1b998400e5a9ef9945e86ac83cf6d321c05129173301e9f56ba58f9ea267c238bf0bf9
+  languageName: node
+  linkType: hard
+
+"vite-plugin-ejs-importer@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "vite-plugin-ejs-importer@npm:1.0.5"
+  dependencies:
+    ejs: ^3.1.8
+  checksum: 2532fb5894a02a5e3e0cc32cde3bb427bfb322f664e5d5fdce8b19c4fceea3723c761d620027562e6b23c2df7739af0f52888dc4ca9865f9f6acb2cdb8601959
   languageName: node
   linkType: hard
 

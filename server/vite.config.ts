@@ -1,21 +1,7 @@
-import { defineConfig, loadEnv, Plugin } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import { VitePluginNode } from 'vite-plugin-node'
 import { resolve } from 'path'
-import { readFile } from 'fs/promises'
-
-function EJSPlugin(): Plugin {
-	const fileRegex = /\.(ejs)$/
-
-	return {
-		name: 'ejs-importer',
-		enforce: 'pre',
-		async load(id) {
-			if (!fileRegex.test(id)) return
-			const fileData = await readFile(id, 'utf8')
-			return `export default ${JSON.stringify(fileData)}`
-		},
-	}
-}
+import { VitePluginEJSImporter } from 'vite-plugin-ejs-importer'
 
 export default defineConfig(env => {
 	const envars = loadEnv(env.mode, '../', ['CLIENT_', 'SERVER_'])
@@ -43,7 +29,7 @@ export default defineConfig(env => {
 		},
 
 		plugins: [
-			EJSPlugin(),
+			VitePluginEJSImporter(),
 			...VitePluginNode({
 				adapter: 'fastify',
 				appPath: 'src/index.ts',
