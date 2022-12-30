@@ -33,7 +33,6 @@ export default defineConfig(env => {
 			...VitePluginNode({
 				adapter: 'fastify',
 				appPath: 'src/index.ts',
-				tsCompiler: 'swc',
 			}),
 		],
 
