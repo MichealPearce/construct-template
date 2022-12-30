@@ -1,7 +1,11 @@
 import { User } from '@construct/server/database/models/User'
+import { UserRegistration } from '@construct/server/database/models/UserRegistration'
 import { createRoute, Endpoint } from '@construct/server/includes/Endpoint'
-import { comparePassword } from '@construct/server/includes/functions'
-import { ServerError } from '@construct/shared'
+import {
+	comparePassword,
+	hashPassword,
+} from '@construct/server/includes/functions'
+import { LoginCreds, RegisterData, ServerError } from '@construct/shared'
 
 export const authRoute = createRoute('/auth')
 
@@ -17,7 +21,7 @@ export class AuthGETEndpoint extends Endpoint {
 
 @authRoute.endpoint('POST')
 export class AuthPOSTEndpoint extends Endpoint<{
-	body: { username: string; password: string }
+	body: LoginCreds
 }> {
 	async handle() {
 		const invalidError = new ServerError('invalid username or password', 401)
@@ -56,5 +60,52 @@ export class AuthPOSTEndpoint extends Endpoint<{
 export class AuthDELETEEndpoint extends Endpoint {
 	handle() {
 		return this.session.destroy().then(() => ({ success: true }))
+	}
+}
+
+@authRoute.endpoint('POST', '/register')
+export class AuthRegisterEndpoint extends Endpoint<{
+	body: RegisterData
+}> {
+	async handle() {
+		const { name, email, password, password_confirmation } = this.request.body
+
+		if (!name || !email || !password || !password_confirmation)
+			throw new ServerError('missing fields', 400)
+		if (password !== password_confirmation)
+			throw new ServerError('passwords do not match', 400)
+
+		const user = await User.init({
+			name,
+			email,
+			password: await hashPassword(password),
+		}).save()
+
+		const registration = await UserRegistration.init({
+			userUUID: user.uuid,
+		}).save()
+
+		return registration
+	}
+}
+
+@authRoute.endpoint('POST', '/verify')
+export class AuthVerifyEndpoint extends Endpoint<{
+	body: { uuid: string }
+}> {
+	async handle() {
+		const uuid = this.request.body.uuid
+		const registration = await UserRegistration.findOneBy({ uuid })
+
+		if (!registration) throw new ServerError('invalid registration', 400)
+
+		const user = await User.findOneBy({ uuid: registration.userUUID })
+		if (!user) {
+			this.console.warn('user not found for registration: %s', uuid)
+			throw new ServerError('invalid registration', 400)
+		}
+
+		await registration.remove()
+		return user
 	}
 }

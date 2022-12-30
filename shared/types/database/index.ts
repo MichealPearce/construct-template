@@ -17,9 +17,10 @@ export interface ModelUUIDData extends ModelData {
 export interface UserData extends ModelUUIDData {
 	name: string
 	email: string
-	display_name: string
+	display_name: string | null
 	password?: string
 	roles: UserRoleData[]
+	registration?: UserRegistrationData
 }
 
 export interface UserRoleData extends ModelData {
@@ -30,4 +31,9 @@ export interface UserRoleData extends ModelData {
 export interface AppSessionData extends ModelData {
 	id: string
 	data: Record<string, any>
+}
+
+export interface UserRegistrationData extends ModelUUIDData {
+	userUUID: string
+	user: UserData
 }
