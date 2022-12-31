@@ -1,6 +1,13 @@
 import { defineStore } from '@construct/client/includes/functions'
 import { UserData } from '@construct/shared'
-import { reactive } from 'vue'
+import { inject, InjectionKey, provide, reactive, Ref } from 'vue'
+
+export type UserInjectionValue = Ref<UserData | null>
+export const UserInjectionKey: InjectionKey<UserInjectionValue> = Symbol('user')
+
+export const provideUser = (user: UserInjectionValue) =>
+	provide(UserInjectionKey, user)
+export const injectUser = () => inject(UserInjectionKey)!
 
 export const useUsers = defineStore('users', context => {
 	const { api } = context
@@ -68,6 +75,27 @@ export const useUsers = defineStore('users', context => {
 		return set(item)
 	}
 
+	function update(uuid: string, data: Partial<UserData>) {
+		return api
+			.patch(`users/${uuid}`, data)
+			.then(res => res.data)
+			.then(set)
+	}
+
+	function addRole(uuid: string, name: string) {
+		return api
+			.post(`users/${uuid}/roles/${name}`)
+			.then(res => res.data)
+			.then(set)
+	}
+
+	function removeRole(uuid: string, name: string) {
+		return api
+			.delete(`users/${uuid}/roles/${name}`)
+			.then(res => res.data)
+			.then(set)
+	}
+
 	return {
 		items,
 		get,
@@ -75,5 +103,8 @@ export const useUsers = defineStore('users', context => {
 		fetch,
 		list,
 		create,
+		update,
+		addRole,
+		removeRole,
 	}
 })

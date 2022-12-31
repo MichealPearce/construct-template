@@ -1,6 +1,14 @@
 import { defineStore } from '@construct/client/includes/functions'
 import { UserRoleData } from '@construct/shared'
-import { reactive } from 'vue'
+import { inject, InjectionKey, provide, reactive, Ref } from 'vue'
+
+export type UserRoleInjectionValue = Ref<UserRoleData | null>
+export const UserRoleInjectionKey: InjectionKey<UserRoleInjectionValue> =
+	Symbol('userRole')
+
+export const provideUserRole = (userRole: UserRoleInjectionValue) =>
+	provide(UserRoleInjectionKey, userRole)
+export const injectUserRole = () => inject(UserRoleInjectionKey)!
 
 export const useUserRoles = defineStore('userRoles', context => {
 	const { api } = context
@@ -13,6 +21,13 @@ export const useUserRoles = defineStore('userRoles', context => {
 		return items[name]
 	}
 
+	function set(data: UserRoleData) {
+		if (data.name in items) Object.assign(items[data.name], data)
+		else items[data.name] = data
+
+		return get(data.name)!
+	}
+
 	async function list(params?: Record<string, any>) {
 		const data = await api
 			.get<UserRoleData[]>('users/roles', { params })
@@ -23,19 +38,17 @@ export const useUserRoles = defineStore('userRoles', context => {
 		return data
 	}
 
-	async function create(data: { name: string }) {
-		const item = await api
+	function create(data: { name: string }) {
+		return api
 			.post<UserRoleData>('users/roles', data)
 			.then(res => res.data)
-
-		items[item.name] = item
-
-		return item
+			.then(set)
 	}
 
 	return {
 		items,
 		get,
+		set,
 		list,
 		create,
 	}
