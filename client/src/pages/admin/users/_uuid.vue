@@ -1,7 +1,7 @@
 <script lang="ts">
-import { useUsers } from '@construct/client/stores/users'
-import { UserData } from '@construct/shared'
-import { defineComponent, onBeforeMount, ref } from 'vue'
+import { useFetch } from '@construct/client/plugins/fetch'
+import { provideUser, useUsers } from '@construct/client/stores/users'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
 	name: 'AdminUsersSinglePage',
@@ -15,31 +15,25 @@ const props = defineProps<{
 	uuid: string
 }>()
 
-const user = ref<UserData | null>(null)
+const fetched = useFetch(() => users.fetch(props.uuid))
+const user = computed(() => fetched.result)
 
-async function fetch() {
-	try {
-		const fetched = await users.fetch(props.uuid)
-		user.value = fetched
-	} catch (error) {
-		console.error('failed to fetch user', error)
-	}
-}
-
-onBeforeMount(fetch)
+provideUser(user)
 </script>
 
 <template>
-	<ConstructPage class="admin-users-single-page">
-		<template v-if="user">
-			{{ user.name }}
-			{{ user.display_name }}
-			{{ user.email }}
-		</template>
+	<ConstructPage
+		v-if="fetched.pending"
+		class="loading"
+	>
+		loading...
 	</ConstructPage>
+	<template v-else-if="fetched.error"> something done broke </template>
+	<RouterView v-else-if="user" />
 </template>
 
 <style lang="scss" scoped>
-.admin-users-single-page {
+.loading {
+	@include flex(column, center, center);
 }
 </style>

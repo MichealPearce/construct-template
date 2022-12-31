@@ -64,9 +64,7 @@ onBeforeMount(list)
 					:to="`/admin/users/${user.uuid}`"
 					class="item"
 				>
-					<ConstructButton>
-						{{ user.name }}
-					</ConstructButton>
+					{{ user.display_name ?? user.name }}
 				</ConstructLink>
 			</div>
 		</div>
@@ -104,11 +102,27 @@ onBeforeMount(list)
 
 			.item {
 				width: 100%;
+				padding: 0.75em 1em;
 
-				.construct-button {
-					@include flex(row, space-between, center);
-					width: 100%;
-					text-transform: capitalize;
+				background-color: invert($color-background, 15%);
+				color: $color-text;
+
+				text-overflow: ellipsis;
+				text-transform: capitalize;
+
+				overflow: hidden;
+				white-space: nowrap;
+				border-radius: $border-radius;
+
+				transition: all 0.25s ease-in-out;
+
+				&:hover {
+					background-color: invert($color-background, 35%);
+				}
+
+				&.router-link-active {
+					background-color: $color-primary;
+					color: $color-primary-text;
 				}
 			}
 		}
