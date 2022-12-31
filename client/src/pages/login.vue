@@ -47,6 +47,7 @@ onBeforeMount(() => {
 
 			<ConstructInput
 				v-model="creds.username"
+				name="username"
 				placeholder="Username"
 				type="text"
 				autocomplete="username"
@@ -54,6 +55,7 @@ onBeforeMount(() => {
 
 			<ConstructInput
 				v-model="creds.password"
+				name="password"
 				placeholder="Password"
 				type="password"
 				autocomplete="current-password"

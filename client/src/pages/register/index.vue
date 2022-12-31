@@ -42,6 +42,7 @@ onBeforeMount(() => {
 
 			<ConstructInput
 				v-model="data.name"
+				name="name"
 				label="Name"
 				type="text"
 				placeholder="username..."
@@ -49,6 +50,7 @@ onBeforeMount(() => {
 
 			<ConstructInput
 				v-model="data.email"
+				name="email"
 				label="Email"
 				type="text"
 				placeholder="email..."
@@ -56,6 +58,7 @@ onBeforeMount(() => {
 
 			<ConstructInput
 				v-model="data.password"
+				name="password"
 				label="Password"
 				type="password"
 				placeholder="password..."
@@ -63,6 +66,7 @@ onBeforeMount(() => {
 
 			<ConstructInput
 				v-model="data.password_confirmation"
+				name="password_confirmation"
 				label="Password Again"
 				type="password"
 				placeholder="password again..."
