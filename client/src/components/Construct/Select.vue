@@ -1,19 +1,16 @@
 <script lang="ts">
-import { extract } from '@construct/shared'
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
-	name: 'ConstructInput',
+	name: 'ConstructSelect',
 })
 </script>
 
 <script setup lang="ts">
 const props = defineProps<{
 	modelValue: any
+	options: { value: any; label: string }[]
 	name: string
-	type?: string
-	placeholder?: string
-	autocomplete?: string
 	label?: string
 }>()
 
@@ -25,30 +22,40 @@ const value = computed({
 	get: () => props.modelValue,
 	set: value => emit('update:modelValue', value),
 })
-
-const inputProps = computed(() =>
-	extract(props, ['name', 'type', 'placeholder', 'autocomplete']),
-)
 </script>
 
 <template>
-	<div class="construct-input">
+	<div class="construct-select">
 		<label
 			v-if="props.label"
-			class="input-label"
 			:for="props.name"
-			v-text="props.label"
-		/>
+		>
+			{{ props.label }}
+		</label>
 
-		<input
-			v-bind="inputProps"
+		<select
 			v-model="value"
-		/>
+			:name="props.name"
+		>
+			<option
+				:value="null"
+				selected
+				disabled
+			>
+				<slot name="default-text">--- select a option ---</slot>
+			</option>
+
+			<option
+				v-for="option in props.options"
+				:value="option.value"
+				v-text="option.label"
+			/>
+		</select>
 	</div>
 </template>
 
 <style lang="scss" scoped>
-.construct-input {
+.construct-select {
 	@include flex(column);
 	width: 100%;
 	padding: 0.5em;
@@ -60,19 +67,18 @@ const inputProps = computed(() =>
 	border-radius: $border-radius;
 
 	label,
-	input {
+	select {
 		width: 100%;
 	}
 
-	label {
-		font-weight: bold;
-	}
-
-	input {
-		font-size: 0.9em;
+	select {
 		padding: 0.75em;
 		border: none;
 		border-radius: $border-radius;
 	}
+}
+
+.construct-select.no-padding {
+	padding: 0;
 }
 </style>
