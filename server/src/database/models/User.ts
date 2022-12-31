@@ -26,4 +26,18 @@ export class User extends ModelUUID<UserData> implements UserData {
 	})
 	@JoinColumn({ name: 'registration_uuid' })
 	declare registration?: UserRegistration
+
+	addRole(role: UserRole) {
+		this.roles.push(role)
+		return this.save()
+	}
+
+	removeRole(role: UserRole) {
+		this.roles = this.roles.filter(r => r.name !== role.name)
+		return this.save()
+	}
+
+	hasRole(role: UserRole) {
+		return this.roles.some(r => r.name === role.name)
+	}
 }
