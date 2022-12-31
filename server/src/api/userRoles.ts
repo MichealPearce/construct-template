@@ -1,4 +1,3 @@
-import { User } from '@construct/server/database/models/User'
 import { UserRole } from '@construct/server/database/models/UserRole'
 import { createRoute, Endpoint } from '@construct/server/includes/Endpoint'
 import { authed } from '@construct/server/middleware/authed'
