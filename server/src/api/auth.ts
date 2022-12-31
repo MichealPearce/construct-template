@@ -12,9 +12,11 @@ export const authRoute = createRoute('/auth')
 @authRoute.endpoint('GET')
 export class AuthGETEndpoint extends Endpoint {
 	handle() {
-		const user = this.authed
+		const authed = this.authed
 
-		if (!user) throw new ServerError('not logged in', 401)
+		if (!authed) throw new ServerError('not logged in', 401)
+
+		const user = User.findOneByOrFail({ uuid: authed.uuid })
 		return user
 	}
 }

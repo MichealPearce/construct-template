@@ -1,8 +1,15 @@
+import { User } from '@construct/server/database/models/User'
 import { UserRole } from '@construct/server/database/models/UserRole'
 import { createRoute, Endpoint } from '@construct/server/includes/Endpoint'
 import { authed } from '@construct/server/middleware/authed'
 import { isAdmin } from '@construct/server/middleware/isAdmin'
-import { defaults, not, ServerError } from '@construct/shared'
+import {
+	defaults,
+	extract,
+	not,
+	ServerError,
+	UserRoleData,
+} from '@construct/shared'
 
 export const userRolesRoute = createRoute('/users/roles')
 
@@ -35,14 +42,15 @@ export class UserRolesListEndpoint extends Endpoint<{
 
 @userRolesRoute.endpoint('POST')
 export class UserRolesCreateEndpoint extends Endpoint<{
-	body: {
-		name: string
-	}
+	body: Pick<UserRoleData, 'name' | 'display_name'>
 }> {
 	static onRequest = [isAdmin]
 
+	get data() {
+		return extract(this.request.body, ['name', 'display_name'])
+	}
+
 	async handle() {
-		const { name } = this.request.body
-		return UserRole.init({ name }).save()
+		return UserRole.init(this.data).save()
 	}
 }

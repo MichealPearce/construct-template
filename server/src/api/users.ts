@@ -1,10 +1,11 @@
 import { User } from '@construct/server/database/models/User'
+import { UserRole } from '@construct/server/database/models/UserRole'
 import { createRoute, Endpoint } from '@construct/server/includes/Endpoint'
 import { hashPassword } from '@construct/server/includes/functions'
 import { authed } from '@construct/server/middleware/authed'
 import { isAdmin } from '@construct/server/middleware/isAdmin'
-import { not, ServerError, UserData } from '@construct/shared'
-import { defaults } from '@construct/shared/utils/functions'
+import { isNull, not, ServerError, UserData } from '@construct/shared'
+import { defaults, extract } from '@construct/shared/utils/functions'
 
 export const usersRoute = createRoute('/users')
 
@@ -74,5 +75,75 @@ export class UsersGETUUIDEndpoint extends Endpoint<{
 
 		if (not(user)) throw new ServerError('user not found', 404)
 		return user
+	}
+}
+
+@usersRoute.endpoint('PATCH', '/:uuid')
+export class UsersPATCHUUIDEndpoint extends Endpoint<{
+	params: {
+		uuid: string
+	}
+	body: Pick<UserData, 'name' | 'display_name' | 'email'>
+}> {
+	static onRequest = [authed]
+
+	get data() {
+		return extract(this.request.body, ['name', 'display_name', 'email'])
+	}
+
+	async handle() {
+		const user = await User.findOneBy({
+			uuid: this.request.params.uuid,
+		})
+
+		if (isNull(user)) throw new ServerError('user not found', 404)
+
+		return user.assign(this.data).save()
+	}
+}
+
+@usersRoute.endpoint('POST', '/:uuid/roles/:name')
+export class UsersAddRoleEndpoint extends Endpoint<{
+	params: { uuid: string; name: string }
+}> {
+	static onRequest = [isAdmin]
+
+	async handle() {
+		const user = await User.findOneBy({
+			uuid: this.request.params.uuid,
+		})
+
+		if (isNull(user)) throw new ServerError('user not found', 404)
+
+		const role = await UserRole.findOneBy({
+			name: this.request.params.name,
+		})
+
+		if (isNull(role)) throw new ServerError('role not found', 404)
+
+		return user.addRole(role)
+	}
+}
+
+@usersRoute.endpoint('DELETE', '/:uuid/roles/:name')
+export class UsersRemoveRoleEndpoint extends Endpoint<{
+	params: { uuid: string; name: string }
+}> {
+	static onRequest = [isAdmin]
+
+	async handle() {
+		const user = await User.findOneBy({
+			uuid: this.request.params.uuid,
+		})
+
+		if (isNull(user)) throw new ServerError('user not found', 404)
+
+		const role = await UserRole.findOneBy({
+			name: this.request.params.name,
+		})
+
+		if (isNull(role)) throw new ServerError('role not found', 404)
+
+		return user.removeRole(role)
 	}
 }
