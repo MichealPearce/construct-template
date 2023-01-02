@@ -9,8 +9,8 @@ export default defineComponent({
 
 <script setup lang="ts">
 const props = defineProps<{
-	modelValue: any
 	name: string
+	modelValue?: any
 	type?: string
 	placeholder?: string
 	autocomplete?: string
