@@ -42,7 +42,7 @@ onBeforeMount(() => {
 
 <template>
 	<ConstructPage class="login-page">
-		<form @submit.prevent="login">
+		<ConstructForm @submit="login">
 			<h1>Login</h1>
 
 			<ConstructInput
@@ -62,7 +62,7 @@ onBeforeMount(() => {
 			/>
 
 			<ConstructButton type="submit">Login</ConstructButton>
-		</form>
+		</ConstructForm>
 	</ConstructPage>
 </template>
 
@@ -70,7 +70,7 @@ onBeforeMount(() => {
 .login-page {
 	@include flex(column, center, center);
 
-	form {
+	.construct-form {
 		@include flex(column);
 		row-gap: 1em;
 	}
