@@ -17,7 +17,6 @@ declare module '@vue/runtime-core' {
     ConstructPage: typeof import('./../components/Construct/Page.vue')['default']
     ConstructSelect: typeof import('./../components/Construct/Select.vue')['default']
     ConstructTitle: typeof import('./../components/Construct/Title.vue')['default']
-    MenuButton: typeof import('./../components/MenuButton.vue')['default']
     NavigationMain: typeof import('./../components/Navigation/Main.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

@@ -2,7 +2,7 @@
 import { useAuth } from '@construct/client/stores/auth'
 import { isAdminUser } from '@construct/shared'
 import { computed, defineComponent, ref, watch } from 'vue'
-import { onBeforeRouteUpdate, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
 	name: 'NavigationMain',
