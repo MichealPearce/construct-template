@@ -44,6 +44,22 @@ export abstract class Endpoint<
 
 	static register?(instance: FastifyInstance): void
 
+	get params() {
+		return this.request.params
+	}
+
+	get query() {
+		return this.request.query
+	}
+
+	get body() {
+		return this.request.body
+	}
+
+	get headers() {
+		return this.request.headers
+	}
+
 	get console() {
 		return this.request.log
 	}
@@ -66,6 +82,8 @@ export abstract class Endpoint<
 		protected readonly reply: EndpointReply<Def>,
 	) {}
 
+	middleware?(): void | Promise<void>
+
 	abstract handle(): any
 }
 
@@ -75,8 +93,12 @@ export type EndpointClass<EP extends Endpoint = Endpoint> = ClassType<
 	typeof Endpoint
 >
 
-export function createRoute(path: string) {
+export function createRoute(
+	path: string,
+	onRegister?: (instance: FastifyInstance) => void | Promise<void>,
+) {
 	const endpoints = new Set<EndpointClass>()
+	const middleware = new Set<FunctionType>()
 
 	function endpoint(method: HTTPMethods, subPath?: string) {
 		return function decorateClass(Target: any): any {
@@ -84,6 +106,11 @@ export function createRoute(path: string) {
 			Target.url = subPath ? join(path, subPath) : path
 			Target.handler = async function (request: any, reply: any) {
 				const endpoint = new Target(this, request, reply)
+
+				for (const handler of middleware)
+					await handler.call(this, request, reply)
+
+				if (endpoint.middleware) await endpoint.middleware()
 				return endpoint.handle()
 			}
 
@@ -92,6 +119,8 @@ export function createRoute(path: string) {
 	}
 
 	async function register(instance: FastifyInstance) {
+		if (onRegister) await onRegister(instance)
+
 		for (const Endpoint of endpoints) {
 			if (Endpoint.register) await Endpoint.register(instance)
 
@@ -101,6 +130,7 @@ export function createRoute(path: string) {
 	}
 
 	return {
+		middleware,
 		endpoint,
 		register,
 	}

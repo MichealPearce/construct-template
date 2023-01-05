@@ -31,7 +31,7 @@ const user = injectUser()
 		</header>
 
 		<div class="user-roles">
-			<ConstructTitle>User Roles</ConstructTitle>
+			<ConstructTitle level="2">User Roles</ConstructTitle>
 
 			<div class="roles">
 				<template
