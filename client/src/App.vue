@@ -5,6 +5,7 @@
 <style lang="scss">
 * {
 	box-sizing: border-box;
+	z-index: 1;
 }
 
 html,
