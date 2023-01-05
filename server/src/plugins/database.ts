@@ -1,5 +1,7 @@
+import { AppFile } from '@construct/server/database/models/AppFile'
 import { AppSession } from '@construct/server/database/models/AppSession'
 import { User } from '@construct/server/database/models/User'
+import { UserAvatar } from '@construct/server/database/models/UserAvatar'
 import { UserRegistration } from '@construct/server/database/models/UserRegistration'
 import { UserRole } from '@construct/server/database/models/UserRole'
 import { hashPassword } from '@construct/server/includes/functions'
@@ -12,7 +14,14 @@ export async function registerDatabase(instance: FastifyInstance) {
 	const source = new DataSource({
 		type: 'sqlite',
 		database: resolve(__BIN_ROOT__, 'database.sqlite'),
-		entities: [User, UserRole, AppSession, UserRegistration],
+		entities: [
+			User,
+			UserRole,
+			AppSession,
+			UserRegistration,
+			AppFile,
+			UserAvatar,
+		],
 		synchronize: true,
 		// logging: true,
 	})

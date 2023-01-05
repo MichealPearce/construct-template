@@ -1,4 +1,5 @@
 import { ModelUUID } from '@construct/server/database/Model'
+import { UserAvatar } from '@construct/server/database/models/UserAvatar'
 import { UserRegistration } from '@construct/server/database/models/UserRegistration'
 import { UserRole } from '@construct/server/database/models/UserRole'
 import { UserData } from '@construct/shared'
@@ -26,6 +27,13 @@ export class User extends ModelUUID<UserData> implements UserData {
 	})
 	@JoinColumn({ name: 'registration_uuid' })
 	declare registration?: UserRegistration
+
+	@Column('varchar', { name: 'avatar_uuid', length: 255, nullable: true })
+	declare avatarUUID: string | null
+
+	@OneToOne(() => UserAvatar, avatar => avatar.user, { onDelete: 'SET NULL' })
+	@JoinColumn({ name: 'avatar_uuid' })
+	declare avatar?: UserAvatar
 
 	addRole(role: UserRole) {
 		this.roles.push(role)
