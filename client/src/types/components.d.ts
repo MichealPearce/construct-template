@@ -19,6 +19,7 @@ declare module '@vue/runtime-core' {
     NavigationMain: typeof import('./../components/Navigation/Main.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    UserAvatar: typeof import('./../components/User/Avatar.vue')['default']
     UserDisplayName: typeof import('./../components/User/DisplayName.vue')['default']
     UserEmail: typeof import('./../components/User/Email.vue')['default']
     UserName: typeof import('./../components/User/Name.vue')['default']
