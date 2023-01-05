@@ -1,7 +1,8 @@
 <script lang="ts">
 import { useAuth } from '@construct/client/stores/auth'
 import { isAdminUser } from '@construct/shared'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
+import { onBeforeRouteUpdate, useRoute } from 'vue-router'
 
 export default defineComponent({
 	name: 'NavigationMain',
@@ -9,13 +10,20 @@ export default defineComponent({
 </script>
 
 <script setup lang="ts">
+const route = useRoute()
 const auth = useAuth()
 
 const mobileMenuOpened = ref(false)
 
+const routeName = computed(() => route.name)
+
 const isAdmin = computed(() =>
 	auth.current ? isAdminUser(auth.current) : false,
 )
+
+watch(routeName, () => {
+	mobileMenuOpened.value = false
+})
 </script>
 
 <template>
