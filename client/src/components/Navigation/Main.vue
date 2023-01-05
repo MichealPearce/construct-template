@@ -1,7 +1,7 @@
 <script lang="ts">
 import { useAuth } from '@construct/client/stores/auth'
 import { isAdminUser } from '@construct/shared'
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 
 export default defineComponent({
 	name: 'NavigationMain',
@@ -10,6 +10,8 @@ export default defineComponent({
 
 <script setup lang="ts">
 const auth = useAuth()
+
+const mobileMenuOpened = ref(false)
 
 const isAdmin = computed(() =>
 	auth.current ? isAdminUser(auth.current) : false,
@@ -22,7 +24,10 @@ const isAdmin = computed(() =>
 			<h1 class="brand-name">Construct</h1>
 		</div>
 
-		<div class="menu">
+		<div
+			class="menu"
+			:class="{ opened: mobileMenuOpened }"
+		>
 			<ConstructLink to="/">Home</ConstructLink>
 
 			<ConstructLink
@@ -45,6 +50,8 @@ const isAdmin = computed(() =>
 				Login
 			</ConstructLink>
 		</div>
+
+		<ConstructMenuButton v-model="mobileMenuOpened" />
 	</nav>
 </template>
 
@@ -58,11 +65,35 @@ const isAdmin = computed(() =>
 	}
 
 	.menu {
-		@include flex(row, flex-end, center);
+		@include flex(column, center, center);
+		width: 100%;
+		height: 100%;
+
+		position: fixed;
+		top: 0;
+		left: 0px;
+
+		background-color: rgba(black, 0.23);
+
+		opacity: 0;
+		visibility: hidden;
+		transition: all 0.3s ease;
+		z-index: 99;
 
 		.construct-link {
 			padding: 0.5em 1em;
+			font-size: 1.25em;
 		}
+
+		&.opened {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+
+	.construct-menu-button {
+		z-index: 100;
+		margin-right: 1em;
 	}
 }
 </style>
