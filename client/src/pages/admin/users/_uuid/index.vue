@@ -17,6 +17,8 @@ const user = injectUser()
 		class="admin-users-single-page"
 	>
 		<header>
+			<UserAvatar />
+
 			<aside>
 				<UserDisplayName element="h2" />
 				<UserName v-slot="{ userName }">@{{ userName }}</UserName>
@@ -58,9 +60,11 @@ const user = injectUser()
 	header {
 		@include flex(row, space-between, center);
 		width: 100%;
+		column-gap: 1em;
 
 		aside {
 			@include flex(column);
+			flex: 1;
 
 			.user-display-name {
 				padding: 0px;
