@@ -1,5 +1,5 @@
 import { defineStore } from '@construct/client/includes/functions'
-import { UserData } from '@construct/shared'
+import { UserAvatarData, UserData } from '@construct/shared'
 import { inject, InjectionKey, provide, reactive, Ref } from 'vue'
 
 export type UserInjectionValue = Ref<UserData | null>
@@ -96,6 +96,35 @@ export const useUsers = defineStore('users', context => {
 			.then(set)
 	}
 
+	function uploadAvatar(user: UserData, data: FormData) {
+		return api
+			.post<UserAvatarData>(`avatars/${user.uuid}`, data)
+			.then(res => res.data)
+			.then(avatar => {
+				user.avatarUUID = avatar.uuid
+				user.avatar = avatar
+				return avatar
+			})
+	}
+
+	function fetchAvatar(user: UserData) {
+		return api
+			.get<UserAvatarData>(`avatars/${user.uuid}?raw=true`)
+			.then(res => res.data)
+			.then(avatar => {
+				user.avatarUUID = avatar.uuid
+				user.avatar = avatar
+				return avatar
+			})
+	}
+
+	function deleteAvatar(user: UserData) {
+		return api.delete(`avatars/${user.uuid}`).then(() => {
+			user.avatarUUID = null
+			delete user.avatar
+		})
+	}
+
 	return {
 		items,
 		get,
@@ -106,5 +135,8 @@ export const useUsers = defineStore('users', context => {
 		update,
 		addRole,
 		removeRole,
+		uploadAvatar,
+		fetchAvatar,
+		deleteAvatar,
 	}
 })
