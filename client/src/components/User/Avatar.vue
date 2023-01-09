@@ -47,6 +47,7 @@ $size: var(--user-avatar-size, 50px);
 
 	border-radius: $user-avatar-radius;
 	overflow: hidden;
+	font-size: 24px;
 
 	img {
 		width: 100%;
@@ -54,10 +55,6 @@ $size: var(--user-avatar-size, 50px);
 
 		object-fit: cover;
 		object-position: center;
-	}
-
-	i {
-		font-size: 24px;
 	}
 }
 </style>
