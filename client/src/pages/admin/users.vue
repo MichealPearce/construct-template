@@ -1,6 +1,5 @@
 <script lang="ts">
 import { useUsers } from '@construct/client/stores/users'
-import { UserData } from '@construct/shared'
 import { computed, defineComponent, onBeforeMount, reactive } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
 
@@ -27,7 +26,11 @@ const items = computed(() =>
 	Array.from(state.uuids).map(uuid => users.get(uuid)!),
 )
 
+let errorTimeout: any
+
 async function list() {
+	if (errorTimeout) return
+
 	try {
 		state.page++
 
@@ -41,6 +44,9 @@ async function list() {
 		state.page--
 
 		console.error('failed listing users', error)
+		errorTimeout = setTimeout(() => {
+			errorTimeout = null
+		}, 5000)
 	}
 }
 
@@ -54,19 +60,28 @@ onBeforeMount(list)
 				<h3>Users</h3>
 
 				<ConstructLink to="/admin/users/create">
-					<ConstructButton>Create User</ConstructButton>
+					<ConstructButton>Create</ConstructButton>
 				</ConstructLink>
 			</header>
 
-			<div class="items">
-				<ConstructLink
-					v-for="user of items"
-					:to="`/admin/users/${user.uuid}`"
-					class="item"
+			<ConstructScrollNotifier
+				v-slot="{ handle }"
+				@scroll-end="list"
+			>
+				<div
+					class="items"
+					@wheel.passive.self="handle"
+					@scroll.passive.self="handle"
 				>
-					{{ user.display_name ?? user.name }}
-				</ConstructLink>
-			</div>
+					<ConstructLink
+						v-for="user of items"
+						:to="`/admin/users/${user.uuid}`"
+						class="item"
+					>
+						{{ user.display_name ?? user.name }}
+					</ConstructLink>
+				</div>
+			</ConstructScrollNotifier>
 		</div>
 
 		<RouterView :key="route.path" />
@@ -91,7 +106,7 @@ onBeforeMount(list)
 		header {
 			@include flex(row, space-between, center);
 			width: 100%;
-			padding: 0.5em;
+			padding: 1em;
 		}
 
 		.items {
@@ -99,8 +114,11 @@ onBeforeMount(list)
 			row-gap: 1em;
 			width: 100%;
 			padding: 1em;
+			flex: 1;
+			overflow: auto;
 
 			.item {
+				flex-shrink: 0;
 				width: 100%;
 				padding: 0.75em 1em;
 
