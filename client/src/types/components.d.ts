@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AdminNavigationMain: typeof import('./../components/Admin/Navigation/Main.vue')['default']
     AdminNavigationSidebar: typeof import('./../components/Admin/Navigation/Sidebar.vue')['default']
     ConstructButton: typeof import('./../components/Construct/Button.vue')['default']
     ConstructForm: typeof import('./../components/Construct/Form.vue')['default']
@@ -15,6 +16,7 @@ declare module '@vue/runtime-core' {
     ConstructLink: typeof import('./../components/Construct/Link.vue')['default']
     ConstructMenuButton: typeof import('./../components/Construct/MenuButton.vue')['default']
     ConstructPage: typeof import('./../components/Construct/Page.vue')['default']
+    ConstructScrollNotifier: typeof import('./../components/Construct/ScrollNotifier.vue')['default']
     ConstructSelect: typeof import('./../components/Construct/Select.vue')['default']
     ConstructTitle: typeof import('./../components/Construct/Title.vue')['default']
     NavigationMain: typeof import('./../components/Navigation/Main.vue')['default']
