@@ -19,6 +19,7 @@ export default defineComponent({
 			<ConstructLink to="/admin">Dashboard</ConstructLink>
 			<ConstructLink to="/admin/users">Users</ConstructLink>
 			<ConstructLink to="/admin/roles">Roles</ConstructLink>
+			<ConstructLink to="/login?logout=true">Logout</ConstructLink>
 		</div>
 	</nav>
 </template>
@@ -28,7 +29,7 @@ export default defineComponent({
 	@include flex(column);
 	min-width: 200px;
 	width: 20%;
-	max-width: 250px;
+	max-width: 100%;
 	height: 100%;
 
 	background-color: darken($color-background, 20%);
