@@ -10,11 +10,12 @@ export default defineComponent({
 
 <template>
 	<ConstructPage class="admin-roles-index-page">
-		<h1>Roles</h1>
+		<h1>Select a Roles</h1>
 	</ConstructPage>
 </template>
 
 <style lang="scss" scoped>
 .admin-roles-index-page {
+	@include flex(column, center, center);
 }
 </style>

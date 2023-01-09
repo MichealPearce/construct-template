@@ -48,7 +48,7 @@ onBeforeMount(list)
 				<h3>User Roles</h3>
 
 				<ConstructLink to="/admin/roles/create">
-					<ConstructButton>Create User Role</ConstructButton>
+					<ConstructButton>Create</ConstructButton>
 				</ConstructLink>
 			</header>
 
@@ -86,16 +86,39 @@ onBeforeMount(list)
 		header {
 			@include flex(row, space-between, center);
 			width: 100%;
-			padding: 0.5em;
+			padding: 1em;
 		}
 
 		.items {
 			@include flex(column);
+			row-gap: 1em;
 			width: 100%;
+			padding: 1em;
 
 			.item {
 				width: 100%;
-				padding: 1em;
+				padding: 0.75em 1em;
+
+				background-color: invert($color-background, 15%);
+				color: $color-text;
+
+				text-overflow: ellipsis;
+				text-transform: capitalize;
+
+				overflow: hidden;
+				white-space: nowrap;
+				border-radius: $border-radius;
+
+				transition: all 0.25s ease-in-out;
+
+				&:hover {
+					background-color: invert($color-background, 35%);
+				}
+
+				&.router-link-active {
+					background-color: $color-primary;
+					color: $color-primary-text;
+				}
 			}
 		}
 	}
