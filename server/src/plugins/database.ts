@@ -4,6 +4,7 @@ import { User } from '@construct/server/database/models/User'
 import { UserAvatar } from '@construct/server/database/models/UserAvatar'
 import { UserRegistration } from '@construct/server/database/models/UserRegistration'
 import { UserRole } from '@construct/server/database/models/UserRole'
+import { createTestUsers } from '@construct/server/includes/createTestUsers'
 import { hashPassword } from '@construct/server/includes/functions'
 import { ConstructError } from '@construct/shared'
 import { FastifyInstance } from 'fastify'
@@ -36,6 +37,7 @@ export async function registerDatabase(instance: FastifyInstance) {
 
 	instance.decorate('database', source)
 	await setupRootUser()
+	// await createTestUsers()
 }
 
 async function setupRootUser() {
