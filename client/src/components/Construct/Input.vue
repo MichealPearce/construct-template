@@ -15,6 +15,8 @@ const props = defineProps<{
 	placeholder?: string
 	autocomplete?: string
 	label?: string
+	required?: boolean
+	title?: string
 }>()
 
 const emit = defineEmits<{
@@ -27,7 +29,14 @@ const value = computed({
 })
 
 const inputProps = computed(() =>
-	extract(props, ['name', 'type', 'placeholder', 'autocomplete']),
+	extract(props, [
+		'name',
+		'type',
+		'placeholder',
+		'autocomplete',
+		'required',
+		'title',
+	]),
 )
 </script>
 
@@ -37,8 +46,15 @@ const inputProps = computed(() =>
 			v-if="props.label"
 			class="input-label"
 			:for="props.name"
-			v-text="props.label"
-		/>
+		>
+			{{ props.label }}
+
+			<span
+				v-if="props.required"
+				class="required-mark"
+				v-text="'*'"
+			/>
+		</label>
 
 		<input
 			v-bind="inputProps"
@@ -66,6 +82,10 @@ const inputProps = computed(() =>
 
 	label {
 		font-weight: bold;
+
+		.required-mark {
+			color: red;
+		}
 	}
 
 	input {

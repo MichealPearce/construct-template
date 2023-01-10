@@ -3,15 +3,17 @@ import { extract } from '@construct/shared'
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
-	name: 'ConstructSelect',
+	name: 'ConstructTextArea',
 })
 </script>
 
 <script setup lang="ts">
 const props = defineProps<{
-	modelValue?: any
-	options: { value: any; label: string }[]
 	name: string
+	modelValue?: any
+	type?: string
+	placeholder?: string
+	autocomplete?: string
 	label?: string
 	required?: boolean
 	title?: string
@@ -22,21 +24,31 @@ const emit = defineEmits<{
 }>()
 
 const value = computed({
-	get: () => props.modelValue ?? null,
+	get: () => props.modelValue,
 	set: value => emit('update:modelValue', value),
 })
 
-const inputProps = computed(() => extract(props, ['name', 'required', 'title']))
+const inputProps = computed(() =>
+	extract(props, [
+		'name',
+		'type',
+		'placeholder',
+		'autocomplete',
+		'required',
+		'title',
+	]),
+)
 </script>
 
 <template>
-	<div class="construct-select">
+	<div class="construct-text-area">
 		<label
 			v-if="props.label"
 			class="input-label"
 			:for="props.name"
 		>
 			{{ props.label }}
+
 			<span
 				v-if="props.required"
 				class="required-mark"
@@ -44,29 +56,15 @@ const inputProps = computed(() => extract(props, ['name', 'required', 'title']))
 			/>
 		</label>
 
-		<select
+		<textarea
 			v-bind="inputProps"
 			v-model="value"
-		>
-			<option
-				:value="null"
-				selected
-				disabled
-			>
-				<slot name="default-text">--- select a option ---</slot>
-			</option>
-
-			<option
-				v-for="option in props.options"
-				:value="option.value"
-				v-text="option.label"
-			/>
-		</select>
+		/>
 	</div>
 </template>
 
 <style lang="scss" scoped>
-.construct-select {
+.construct-text-area {
 	@include flex(column);
 	width: 100%;
 	padding: 0.5em;
@@ -78,7 +76,7 @@ const inputProps = computed(() => extract(props, ['name', 'required', 'title']))
 	border-radius: $border-radius;
 
 	label,
-	select {
+	textarea {
 		width: 100%;
 	}
 
@@ -90,15 +88,15 @@ const inputProps = computed(() => extract(props, ['name', 'required', 'title']))
 		}
 	}
 
-	select {
+	textarea {
+		min-height: 75px;
+
 		font-size: 0.9em;
 		padding: 0.75em;
 		border: none;
 		border-radius: $border-radius;
-	}
-}
 
-.construct-select.no-padding {
-	padding: 0;
+		resize: vertical;
+	}
 }
 </style>

@@ -18,6 +18,7 @@ declare module '@vue/runtime-core' {
     ConstructPage: typeof import('./../components/Construct/Page.vue')['default']
     ConstructScrollNotifier: typeof import('./../components/Construct/ScrollNotifier.vue')['default']
     ConstructSelect: typeof import('./../components/Construct/Select.vue')['default']
+    ConstructTextArea: typeof import('./../components/Construct/TextArea.vue')['default']
     ConstructTitle: typeof import('./../components/Construct/Title.vue')['default']
     NavigationMain: typeof import('./../components/Navigation/Main.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
