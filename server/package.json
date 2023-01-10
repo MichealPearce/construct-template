@@ -25,6 +25,7 @@
 		"fastify": "^4.10.2",
 		"nodemailer": "^6.8.0",
 		"pino": "^8.8.0",
+		"socket.io": "^4.5.4",
 		"sqlite3": "^5.1.4",
 		"typeorm": "^0.3.11"
 	},
