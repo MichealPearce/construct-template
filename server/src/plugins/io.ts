@@ -10,13 +10,13 @@ declare module 'fastify' {
 
 declare module 'socket.io' {
 	interface Socket {
-		session?: Record<string, any>
+		session: Map<string, any>
 	}
 }
 
 export async function registerIO(instance: FastifyInstance) {
 	const getSession = (sessionID: string, request: any = {}) =>
-		new Promise<any>((resolve, reject) =>
+		new Promise<Record<string, any>>((resolve, reject) =>
 			instance.decryptSession(sessionID, request, {}, err =>
 				err ? reject(err) : resolve(request.session),
 			),
@@ -33,12 +33,15 @@ export async function registerIO(instance: FastifyInstance) {
 	instance.decorate('io', io)
 
 	io.use(async (socket, next) => {
+		socket.session = new Map()
 		const cookies = instance.parseCookie(socket.request.headers.cookie ?? '')
 		const sessionID = cookies['construct-session']
 
 		if (!sessionID) return next()
 		try {
-			socket.session = await getSession(sessionID)
+			const data = await getSession(sessionID)
+			for (const [key, value] of Object.entries(data))
+				socket.session.set(key, value)
 		} catch (error) {
 			instance.log.info(error, 'failed getting session')
 		} finally {
