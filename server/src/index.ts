@@ -1,9 +1,9 @@
-import { registerAPI } from '@construct/server/api'
 import { SessionStore } from '@construct/server/includes/SessionStore'
 import { registerClient } from '@construct/server/plugins/client'
 import { registerDatabase } from '@construct/server/plugins/database'
 import { registerIO } from '@construct/server/plugins/io'
 import { registerMailer } from '@construct/server/plugins/mailer'
+import { registerRoutes } from '@construct/server/plugins/routes'
 import fastifyCookie from '@fastify/cookie'
 import fastifyMultipart from '@fastify/multipart'
 import fastifySession from '@fastify/session'
@@ -32,11 +32,7 @@ async function start() {
 	await registerMailer(app)
 	await registerIO(app)
 
-	await app
-		.register(registerAPI, {
-			prefix: '/api',
-		})
-		.register(registerClient)
+	await app.register(registerRoutes).register(registerClient)
 
 	const serverURL = new URL(import.meta.env.SERVER_URL)
 	await app.listen({

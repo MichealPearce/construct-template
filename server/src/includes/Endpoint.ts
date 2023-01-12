@@ -129,9 +129,8 @@ export function createRoute(
 		}
 	}
 
-	return {
+	return Object.assign(register, {
 		middleware,
 		endpoint,
-		register,
-	}
+	})
 }

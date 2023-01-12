@@ -7,9 +7,9 @@ import {
 } from '@construct/server/includes/functions'
 import { LoginCreds, RegisterData, ServerError } from '@construct/shared'
 
-export const authRoute = createRoute('/auth')
+export const route = createRoute('/auth')
 
-@authRoute.endpoint('GET')
+@route.endpoint('GET')
 export class AuthGETEndpoint extends Endpoint {
 	handle() {
 		const authed = this.authed
@@ -21,7 +21,7 @@ export class AuthGETEndpoint extends Endpoint {
 	}
 }
 
-@authRoute.endpoint('POST')
+@route.endpoint('POST')
 export class AuthPOSTEndpoint extends Endpoint<{
 	body: LoginCreds
 }> {
@@ -58,14 +58,14 @@ export class AuthPOSTEndpoint extends Endpoint<{
 	}
 }
 
-@authRoute.endpoint('DELETE')
+@route.endpoint('DELETE')
 export class AuthDELETEEndpoint extends Endpoint {
 	handle() {
 		return this.session.destroy().then(() => ({ success: true }))
 	}
 }
 
-@authRoute.endpoint('POST', '/register')
+@route.endpoint('POST', '/register')
 export class AuthRegisterEndpoint extends Endpoint<{
 	body: RegisterData
 }> {
@@ -91,7 +91,7 @@ export class AuthRegisterEndpoint extends Endpoint<{
 	}
 }
 
-@authRoute.endpoint('POST', '/verify')
+@route.endpoint('POST', '/verify')
 export class AuthVerifyEndpoint extends Endpoint<{
 	body: { uuid: string }
 }> {

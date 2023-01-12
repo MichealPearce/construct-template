@@ -10,9 +10,9 @@ import {
 	UserRoleData,
 } from '@construct/shared'
 
-export const userRolesRoute = createRoute('/users/roles')
+export const route = createRoute('/users/roles')
 
-@userRolesRoute.endpoint('GET')
+@route.endpoint('GET')
 export class UserRolesListEndpoint extends Endpoint<{
 	query: {
 		page?: number
@@ -39,7 +39,7 @@ export class UserRolesListEndpoint extends Endpoint<{
 	}
 }
 
-@userRolesRoute.endpoint('POST')
+@route.endpoint('POST')
 export class UserRolesCreateEndpoint extends Endpoint<{
 	body: Pick<UserRoleData, 'name' | 'display_name'>
 }> {

@@ -7,9 +7,9 @@ import { isAdmin } from '@construct/server/middleware/isAdmin'
 import { isNull, not, ServerError, UserData } from '@construct/shared'
 import { defaults, extract } from '@construct/shared/utils/functions'
 
-export const usersRoute = createRoute('/users')
+export const route = createRoute('/users')
 
-@usersRoute.endpoint('GET')
+@route.endpoint('GET')
 export class UsersGETEndpoint extends Endpoint<{
 	query: {
 		page?: number
@@ -37,7 +37,7 @@ export class UsersGETEndpoint extends Endpoint<{
 	}
 }
 
-@usersRoute.endpoint('POST')
+@route.endpoint('POST')
 export class UsersPOSTEndpoint extends Endpoint<{
 	body: Pick<UserData, 'name' | 'display_name' | 'email' | 'password'>
 }> {
@@ -60,7 +60,7 @@ export class UsersPOSTEndpoint extends Endpoint<{
 	}
 }
 
-@usersRoute.endpoint('GET', '/:uuid')
+@route.endpoint('GET', '/:uuid')
 export class UsersGETUUIDEndpoint extends Endpoint<{
 	params: {
 		uuid: string
@@ -78,7 +78,7 @@ export class UsersGETUUIDEndpoint extends Endpoint<{
 	}
 }
 
-@usersRoute.endpoint('PATCH', '/:uuid')
+@route.endpoint('PATCH', '/:uuid')
 export class UsersPATCHUUIDEndpoint extends Endpoint<{
 	params: {
 		uuid: string
@@ -102,7 +102,7 @@ export class UsersPATCHUUIDEndpoint extends Endpoint<{
 	}
 }
 
-@usersRoute.endpoint('POST', '/:uuid/roles/:name')
+@route.endpoint('POST', '/:uuid/roles/:name')
 export class UsersAddRoleEndpoint extends Endpoint<{
 	params: { uuid: string; name: string }
 }> {
@@ -125,7 +125,7 @@ export class UsersAddRoleEndpoint extends Endpoint<{
 	}
 }
 
-@usersRoute.endpoint('DELETE', '/:uuid/roles/:name')
+@route.endpoint('DELETE', '/:uuid/roles/:name')
 export class UsersRemoveRoleEndpoint extends Endpoint<{
 	params: { uuid: string; name: string }
 }> {

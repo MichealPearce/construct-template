@@ -10,7 +10,7 @@ import { authed } from '@construct/server/middleware/authed'
 
 const avatarsUploadPath = resolve(__BIN_ROOT__, 'avatars')
 
-export const avatarsRoute = createRoute('/avatars', async instance => {
+export const route = createRoute('/avatars', async instance => {
 	if (!existsSync(avatarsUploadPath)) {
 		instance.log.info(
 			'creating avatars upload directory: %s',
@@ -26,7 +26,7 @@ export const avatarsRoute = createRoute('/avatars', async instance => {
 	}
 })
 
-@avatarsRoute.endpoint('GET', '/:uuid')
+@route.endpoint('GET', '/:uuid')
 export class AvatarsGetEndpoint extends Endpoint<{
 	params: { uuid: string }
 	query: { raw?: boolean }
@@ -76,7 +76,7 @@ export class AvatarsGetEndpoint extends Endpoint<{
 	}
 }
 
-@avatarsRoute.endpoint('POST', '/:userUUID')
+@route.endpoint('POST', '/:userUUID')
 export class AvatarsPostEndpoint extends Endpoint<{
 	params: { userUUID: string }
 }> {
@@ -189,7 +189,7 @@ export class AvatarsPostEndpoint extends Endpoint<{
 	}
 }
 
-@avatarsRoute.endpoint('DELETE', '/:userUUID')
+@route.endpoint('DELETE', '/:userUUID')
 export class AvatarsDeleteEndpoint extends Endpoint<{
 	params: { userUUID: string }
 }> {
