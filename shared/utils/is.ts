@@ -31,7 +31,9 @@ export function notNull<T>(thing: T): thing is Not<T, null> {
 	return not(isNull(thing))
 }
 
-export function isObject<T>(thing: T): thing is Is<T, object> {
+export function isObject<T extends object>(
+	thing: unknown,
+): thing is Is<T, object> {
 	return typeof thing === 'object' && notNull(thing)
 }
 
@@ -39,19 +41,21 @@ export function notObject<T>(thing: T): thing is Not<T, object> {
 	return not(isObject(thing))
 }
 
-export function inObject<T, Props extends string | number | symbol>(
-	thing: T,
+export function inObject<
+	T extends Record<any, any>,
+	Props extends string | number | symbol,
+>(
+	thing: unknown,
 	props: Props[],
-): thing is Is<
-	T,
-	{
-		[Prop in Props]: any
-	}
-> {
+): thing is {
+	[P in Props]: T[P]
+} {
 	return isObject(thing) && props.every(prop => prop in thing)
 }
 
-export function isFunction<T>(thing: T): thing is Is<T, FunctionType> {
+export function isFunction<T extends FunctionType>(
+	thing: unknown,
+): thing is Is<T, FunctionType> {
 	return typeof thing === 'function'
 }
 

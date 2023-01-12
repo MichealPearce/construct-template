@@ -1,4 +1,5 @@
 <script lang="ts">
+import { useSocket } from '@construct/client/plugins/io'
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
@@ -7,12 +8,23 @@ export default defineComponent({
 </script>
 
 <script setup lang="ts">
-const opened = ref(false)
+const socket = useSocket()
 </script>
 
 <template>
 	<ConstructPage class="test-page">
-		<ConstructMenuButton v-model="opened" />
+		<ConstructTextArea
+			name="test"
+			label="Test"
+			required
+		/>
+
+		<ConstructSelect
+			name="testSelect"
+			label="Test Select"
+			:options="[{ label: 'Test', value: 'test' }]"
+			required
+		/>
 	</ConstructPage>
 </template>
 

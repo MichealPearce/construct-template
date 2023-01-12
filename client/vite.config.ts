@@ -45,7 +45,7 @@ export default defineConfig(env => {
 					target: serverURL.origin,
 					changeOrigin: true,
 				},
-				'/socket.io': {
+				'/io': {
 					target: serverURL.origin,
 					changeOrigin: true,
 					ws: true,
