@@ -49,11 +49,11 @@ export async function registerIO(instance: FastifyInstance) {
 		}
 	})
 
-	const namespaces = import.meta.glob('../api/**/*.socket.ts', {
+	const sockets = import.meta.glob('../api/**/*.socket.ts', {
 		eager: true,
 	})
 
-	for (const [path, imported] of Object.entries(namespaces)) {
+	for (const [path, imported] of Object.entries(sockets)) {
 		if (
 			isObject(imported) &&
 			inObject(imported, ['socket']) &&
