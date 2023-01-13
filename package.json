@@ -16,7 +16,7 @@
 		"dev": "run-p dev:server dev:client",
 		"build:server": "yarn server build",
 		"build:client": "yarn client build",
-		"build": "run-p build:server build:client",
+		"build": "run-s build:server build:client",
 		"start": "node dist"
 	},
 	"devDependencies": {
