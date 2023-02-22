@@ -1,5 +1,5 @@
 import { definePlugin } from '@construct/server/includes/definePlugin'
-import { isObject, inObject, isFunction } from '@construct/shared'
+import { isObject, inObject, isFunction } from '@michealpearce/utils'
 
 export const registerRoutes = definePlugin(async instance => {
 	const routes = import.meta.glob('../api/**/*.route.ts', {

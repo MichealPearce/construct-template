@@ -4,8 +4,8 @@ import { createRoute, Endpoint } from '@construct/server/includes/Endpoint'
 import { hashPassword } from '@construct/server/includes/functions'
 import { authed } from '@construct/server/middleware/authed'
 import { isAdmin } from '@construct/server/middleware/isAdmin'
-import { isNull, not, ServerError, UserData } from '@construct/shared'
-import { defaults, extract } from '@construct/shared/utils/functions'
+import { ServerError, UserData } from '@construct/shared'
+import { defaults, isNull, not, pick } from '@michealpearce/utils'
 
 export const route = createRoute('/users')
 
@@ -88,7 +88,7 @@ export class UsersPATCHUUIDEndpoint extends Endpoint<{
 	static onRequest = [authed]
 
 	get data() {
-		return extract(this.request.body, ['name', 'display_name', 'email'])
+		return pick(this.request.body, ['name', 'display_name', 'email'])
 	}
 
 	async handle() {

@@ -1,4 +1,4 @@
-import { inObject, isFunction, isObject } from '@construct/shared'
+import { inObject, isFunction, isObject } from '@michealpearce/utils'
 import { FastifyInstance } from 'fastify'
 import { Server } from 'socket.io'
 

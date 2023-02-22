@@ -1,4 +1,5 @@
-import { isAdminUser, not, ServerError, UserData } from '@construct/shared'
+import { isAdminUser, ServerError, UserData } from '@construct/shared'
+import { not } from '@michealpearce/utils'
 import { onRequestHookHandler } from 'fastify'
 
 export const isAdmin: onRequestHookHandler = function (request, _reply, done) {

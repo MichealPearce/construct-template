@@ -2,13 +2,8 @@ import { UserRole } from '@construct/server/database/models/UserRole'
 import { createRoute, Endpoint } from '@construct/server/includes/Endpoint'
 import { authed } from '@construct/server/middleware/authed'
 import { isAdmin } from '@construct/server/middleware/isAdmin'
-import {
-	defaults,
-	extract,
-	not,
-	ServerError,
-	UserRoleData,
-} from '@construct/shared'
+import { ServerError, UserRoleData } from '@construct/shared'
+import { defaults, not, pick } from '@michealpearce/utils'
 
 export const route = createRoute('/users/roles')
 
@@ -46,7 +41,7 @@ export class UserRolesCreateEndpoint extends Endpoint<{
 	static onRequest = [isAdmin]
 
 	get data() {
-		return extract(this.request.body, ['name', 'display_name'])
+		return pick(this.request.body, ['name', 'display_name'])
 	}
 
 	async handle() {

@@ -1,4 +1,5 @@
-import { ClassType, FunctionType, UserData } from '@construct/shared'
+import { UserData } from '@construct/shared'
+import { FunctionType, ClassType } from '@michealpearce/utils'
 import {
 	FastifyInstance,
 	FastifyReply,

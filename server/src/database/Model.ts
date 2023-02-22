@@ -1,10 +1,10 @@
 import {
 	BaseModelData,
-	ClassType,
 	ModelData,
 	ModelIDData,
 	ModelUUIDData,
 } from '@construct/shared'
+import { ClassType } from '@michealpearce/utils'
 import {
 	BaseEntity,
 	CreateDateColumn,
