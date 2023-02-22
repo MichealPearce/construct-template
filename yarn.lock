@@ -51,6 +51,7 @@ __metadata:
   resolution: "@construct/client@workspace:client"
   dependencies:
     "@construct/shared": "workspace:*"
+    "@michealpearce/utils": ^0.0.7
     "@vitejs/plugin-vue": ^4.0.0
     axios: ^1.2.1
     sass: ^1.57.0
@@ -75,6 +76,7 @@ __metadata:
     "@fastify/multipart": ^7.3.0
     "@fastify/session": ^10.1.0
     "@fastify/static": ^6.6.0
+    "@michealpearce/utils": ^0.0.7
     "@types/bcrypt": ^5.0.0
     "@types/ejs": ^3.1.1
     "@types/node": ^18.11.17
@@ -101,6 +103,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@construct/shared@workspace:shared"
   dependencies:
+    "@michealpearce/utils": ^0.0.7
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -398,6 +401,13 @@ __metadata:
   bin:
     node-pre-gyp: bin/node-pre-gyp
   checksum: 1a98db05d955b74dad3814679593df293b9194853698f3f5f1ed00ecd93128cdd4b14fb8767fe44ac6981ef05c23effcfdc88710e7c1de99ccb6f647890597c8
+  languageName: node
+  linkType: hard
+
+"@michealpearce/utils@npm:^0.0.7":
+  version: 0.0.7
+  resolution: "@michealpearce/utils@npm:0.0.7"
+  checksum: 2b9f53f7e61e350edb10ecb50778516324855213a18c28b1b9f768dfab0c5019f57bcb78713378cdf7998a49b644ce182c8c1c69eb07aec453e8e2afeca12026
   languageName: node
   linkType: hard
 

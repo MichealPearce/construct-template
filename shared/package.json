@@ -5,5 +5,8 @@
 	"types": "./index.ts",
 	"devDependencies": {
 		"typescript": "^4.6.4"
+	},
+	"dependencies": {
+		"@michealpearce/utils": "^0.0.7"
 	}
 }
