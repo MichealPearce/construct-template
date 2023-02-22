@@ -1,7 +1,7 @@
 import { useContext } from '@construct/client/includes/functions'
 import { useAuth } from '@construct/client/stores/auth'
 import { ClientContext } from '@construct/client/types'
-import { noop } from '@construct/shared'
+import { noop } from '@michealpearce/utils'
 import axios, { AxiosInstance } from 'axios'
 
 declare module '@construct/client/types' {

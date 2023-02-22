@@ -1,6 +1,5 @@
-import { useContext } from '@construct/client/includes/functions'
 import { ClientContext } from '@construct/client/types'
-import { ConstructError, FunctionType } from '@construct/shared'
+import { ConstructError, FunctionType } from '@michealpearce/utils'
 import { onBeforeMount, reactive } from 'vue'
 
 export type UseFetch<Result> = {

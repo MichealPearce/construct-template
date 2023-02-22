@@ -1,6 +1,6 @@
 <script lang="ts">
 import { useUserRoles } from '@construct/client/stores/userRoles'
-import { extract } from '@construct/shared'
+import { pick } from '@michealpearce/utils'
 import { computed, defineComponent, onBeforeMount, reactive } from 'vue'
 
 export default defineComponent({
@@ -27,7 +27,7 @@ async function list() {
 	try {
 		state.page++
 
-		const params = extract(state, ['page', 'limit'])
+		const params = pick(state, ['page', 'limit'])
 		const items = await userRoles.list(params)
 
 		for (const item of items) state.names.add(item.name)

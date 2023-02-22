@@ -1,4 +1,4 @@
-import { FunctionType } from '@construct/shared'
+import { FunctionType } from '@michealpearce/utils'
 import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 

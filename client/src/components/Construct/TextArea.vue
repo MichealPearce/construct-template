@@ -1,5 +1,5 @@
 <script lang="ts">
-import { extract } from '@construct/shared'
+import { pick } from '@michealpearce/utils'
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
@@ -29,7 +29,7 @@ const value = computed({
 })
 
 const inputProps = computed(() =>
-	extract(props, [
+	pick(props, [
 		'name',
 		'type',
 		'placeholder',

@@ -1,6 +1,6 @@
 <script lang="ts">
 import { injectUser } from '@construct/client/stores/users'
-import { colorFromString } from '@construct/shared'
+import { colorFromString } from '@michealpearce/utils'
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({

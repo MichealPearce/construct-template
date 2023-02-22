@@ -7,7 +7,7 @@ import {
 	RouteRecordRaw,
 } from 'vue-router'
 import generatedRoutes from 'virtual:generated-pages'
-import { isDefined } from '@construct/shared'
+import { isDefined } from '@michealpearce/utils'
 
 declare module '@construct/client/types' {
 	interface ClientContext {

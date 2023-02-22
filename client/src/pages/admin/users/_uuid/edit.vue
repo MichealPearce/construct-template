@@ -2,7 +2,8 @@
 import { useFetch } from '@construct/client/plugins/fetch'
 import { useUserRoles } from '@construct/client/stores/userRoles'
 import { injectUser, useUsers } from '@construct/client/stores/users'
-import { cloneDeep, UserRoleData } from '@construct/shared'
+import { UserRoleData } from '@construct/shared'
+import { cloneDeep } from '@michealpearce/utils'
 import { computed } from '@vue/reactivity'
 import { defineComponent, ref } from 'vue'
 

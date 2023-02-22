@@ -1,5 +1,5 @@
 <script lang="ts">
-import { extract } from '@construct/shared'
+import { pick } from '@michealpearce/utils'
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
@@ -26,7 +26,7 @@ const value = computed({
 	set: value => emit('update:modelValue', value),
 })
 
-const inputProps = computed(() => extract(props, ['name', 'required', 'title']))
+const inputProps = computed(() => pick(props, ['name', 'required', 'title']))
 </script>
 
 <template>
