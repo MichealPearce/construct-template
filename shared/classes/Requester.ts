@@ -1,4 +1,4 @@
-import { clone, defaults, notString } from '../utils'
+import { notString, clone, defaults } from '@michealpearce/utils'
 
 export interface RequesterOptions {
 	headers?: Record<string, string>

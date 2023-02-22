@@ -1,4 +1,4 @@
-import { inObject, Is, isFunction, Rollable } from '../utils'
+import { inObject, Is, isFunction, Rollable } from '@michealpearce/utils'
 
 export type RegisterHandler = (...args: any[]) => Rollable
 
