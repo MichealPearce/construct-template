@@ -1,4 +1,4 @@
-import { ConstructError } from './ConstructError'
+import { ConstructError } from '@michealpearce/utils'
 
 export class ServerError extends ConstructError {
 	public readonly statusCode: number
