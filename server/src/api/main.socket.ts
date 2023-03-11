@@ -1,4 +1,4 @@
-import { definePlugin } from '@construct/server/includes/definePlugin'
+import { definePlugin } from '@michealpearce/classy-fastify'
 
 export const socket = definePlugin(instance => {
 	const io = instance.io

@@ -1,5 +1,4 @@
 import fs from 'fs/promises'
-import { createRoute, Endpoint } from '@construct/server/includes/Endpoint'
 import { existsSync } from 'fs'
 import { resolve } from 'path'
 import { User } from '@construct/server/database/models/User'
@@ -7,10 +6,12 @@ import { UserAvatar } from '@construct/server/database/models/UserAvatar'
 import { isAdminUser, ServerError } from '@construct/shared'
 import { SavedMultipartFile } from '@fastify/multipart'
 import { authed } from '@construct/server/middleware/authed'
+import { defineRoute } from '@michealpearce/classy-fastify'
+import { ConstructEndpoint } from '@construct/server/includes/ConstructEndpoint'
 
 const avatarsUploadPath = resolve(__BIN_ROOT__, 'avatars')
 
-export const route = createRoute('/avatars', async instance => {
+export const route = defineRoute('/avatars', async instance => {
 	if (!existsSync(avatarsUploadPath)) {
 		instance.log.info(
 			'creating avatars upload directory: %s',
@@ -27,7 +28,7 @@ export const route = createRoute('/avatars', async instance => {
 })
 
 @route.endpoint('GET', '/:uuid')
-export class AvatarsGetEndpoint extends Endpoint<{
+export class AvatarsGetEndpoint extends ConstructEndpoint<{
 	params: { uuid: string }
 	query: { raw?: boolean }
 }> {
@@ -77,7 +78,7 @@ export class AvatarsGetEndpoint extends Endpoint<{
 }
 
 @route.endpoint('POST', '/:userUUID')
-export class AvatarsPostEndpoint extends Endpoint<{
+export class AvatarsPostEndpoint extends ConstructEndpoint<{
 	params: { userUUID: string }
 }> {
 	static onRequest = [authed]
@@ -190,7 +191,7 @@ export class AvatarsPostEndpoint extends Endpoint<{
 }
 
 @route.endpoint('DELETE', '/:userUUID')
-export class AvatarsDeleteEndpoint extends Endpoint<{
+export class AvatarsDeleteEndpoint extends ConstructEndpoint<{
 	params: { userUUID: string }
 }> {
 	static onRequest = [authed]

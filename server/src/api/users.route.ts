@@ -1,13 +1,13 @@
 import { User } from '@construct/server/database/models/User'
 import { UserRole } from '@construct/server/database/models/UserRole'
-import { createRoute, Endpoint } from '@construct/server/includes/Endpoint'
 import { hashPassword } from '@construct/server/includes/functions'
 import { authed } from '@construct/server/middleware/authed'
 import { isAdmin } from '@construct/server/middleware/isAdmin'
 import { ServerError, UserData } from '@construct/shared'
+import { defineRoute, Endpoint } from '@michealpearce/classy-fastify'
 import { defaults, isNull, not, pick } from '@michealpearce/utils'
 
-export const route = createRoute('/users')
+export const route = defineRoute('/users')
 
 @route.endpoint('GET')
 export class UsersGETEndpoint extends Endpoint<{

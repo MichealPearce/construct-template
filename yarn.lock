@@ -76,6 +76,7 @@ __metadata:
     "@fastify/multipart": ^7.3.0
     "@fastify/session": ^10.1.0
     "@fastify/static": ^6.6.0
+    "@michealpearce/classy-fastify": ^0.0.3
     "@michealpearce/typeorm-models": ^0.0.2
     "@michealpearce/utils": ^0.0.7
     "@types/bcrypt": ^5.0.0
@@ -84,7 +85,7 @@ __metadata:
     "@types/nodemailer": ^6.4.7
     bcrypt: ^5.1.0
     ejs: ^3.1.8
-    fastify: ^4.10.2
+    fastify: ^4.14.1
     nodemailer: ^6.8.0
     nodemon: ^2.0.20
     pino: ^8.8.0
@@ -279,7 +280,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/ajv-compiler@npm:^3.3.1":
+"@fastify/ajv-compiler@npm:^3.5.0":
   version: 3.5.0
   resolution: "@fastify/ajv-compiler@npm:3.5.0"
   dependencies:
@@ -406,6 +407,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@michealpearce/classy-fastify@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "@michealpearce/classy-fastify@npm:0.0.3"
+  dependencies:
+    "@michealpearce/utils": ^0.0.3
+    fastify: ^4.14.1
+  peerDependencies:
+    fastify: ^4.14.1
+  checksum: ec1498ebc1808834a4835279c74a797d192f96f6e0be4c96278058d00383e7d9ec12cecb83ebae5cda091b895da6a70fb37000267e62ecbe72b63c521a310942
+  languageName: node
+  linkType: hard
+
 "@michealpearce/typeorm-models@npm:^0.0.2":
   version: 0.0.2
   resolution: "@michealpearce/typeorm-models@npm:0.0.2"
@@ -413,6 +426,13 @@ __metadata:
     "@michealpearce/utils": ^0.0.7
     typeorm: ^0.3.12
   checksum: 4de8580e3023dae69a50307b13f12fb67cd18338d9c048189fc7be96f5bbfd21b4bb8b8203cf1ca776a000e8dabdc2845e84c7a948aff68ce736b3033971dd67
+  languageName: node
+  linkType: hard
+
+"@michealpearce/utils@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "@michealpearce/utils@npm:0.0.3"
+  checksum: 79b9b3e97aaa8fc607da4a2aa40efbfad4480e1de06a270bd48b96bc149c67c649f051b182ff51aafc41858bdf7c40f17fcb1cf20de5c9117fbab4666d53203d
   languageName: node
   linkType: hard
 
@@ -1361,13 +1381,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"content-type@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "content-type@npm:1.0.4"
-  checksum: 3d93585fda985d1554eca5ebd251994327608d2e200978fdbfba21c0c679914d5faf266d17027de44b34a72c7b0745b18584ecccaa7e1fdfb6a68ac7114f12e0
-  languageName: node
-  linkType: hard
-
 "cookie@npm:^0.5.0":
   version: 0.5.0
   resolution: "cookie@npm:0.5.0"
@@ -1871,6 +1884,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fast-content-type-parse@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "fast-content-type-parse@npm:1.0.0"
+  checksum: 9e9187be17bea18a2ee715c5737b983181cbe84f286a291db0595e421e04b578da10ca10845639be08664a4db6a793f7709822935cf38cfdf9ecba38d84ead9e
+  languageName: node
+  linkType: hard
+
 "fast-copy@npm:^3.0.0":
   version: 3.0.0
   resolution: "fast-copy@npm:3.0.0"
@@ -1956,16 +1976,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastify@npm:^4.10.2":
-  version: 4.10.2
-  resolution: "fastify@npm:4.10.2"
+"fastify@npm:^4.14.1":
+  version: 4.14.1
+  resolution: "fastify@npm:4.14.1"
   dependencies:
-    "@fastify/ajv-compiler": ^3.3.1
+    "@fastify/ajv-compiler": ^3.5.0
     "@fastify/error": ^3.0.0
     "@fastify/fast-json-stringify-compiler": ^4.1.0
     abstract-logging: ^2.0.1
     avvio: ^8.2.0
-    content-type: ^1.0.4
+    fast-content-type-parse: ^1.0.0
     find-my-way: ^7.3.0
     light-my-request: ^5.6.1
     pino: ^8.5.0
@@ -1975,7 +1995,7 @@ __metadata:
     secure-json-parse: ^2.5.0
     semver: ^7.3.7
     tiny-lru: ^10.0.0
-  checksum: 1050bb361051b5fa5593dc1ea9a1fdff35980444d29e74fb13d94face47b38be6cb047e61d87b6a1f6337e3e0afb4873dbff342a3ae02f0ea7bf60fec51e8f1f
+  checksum: 243c376fea832a80627fdfdc191043c648430ff4f6c44831b6cad9328cbd02f5ef589de6e4bbe4d075d248e686a0b20832d9b2a6a6f13a92a75a1cbd30ce2cd5
   languageName: node
   linkType: hard
 

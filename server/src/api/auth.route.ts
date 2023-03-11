@@ -1,17 +1,19 @@
 import { User } from '@construct/server/database/models/User'
 import { UserRegistration } from '@construct/server/database/models/UserRegistration'
-import { createRoute, Endpoint } from '@construct/server/includes/Endpoint'
+import { ConstructEndpoint } from '@construct/server/includes/ConstructEndpoint'
 import {
 	comparePassword,
 	hashPassword,
 } from '@construct/server/includes/functions'
 import { LoginCreds, RegisterData, ServerError } from '@construct/shared'
+import { defineRoute } from '@michealpearce/classy-fastify'
 
-export const route = createRoute('/auth')
+export const route = defineRoute('/auth')
 
 @route.endpoint('GET')
-export class AuthGETEndpoint extends Endpoint {
+export class AuthGETEndpoint extends ConstructEndpoint {
 	handle() {
+		this.console.info('authed: %o', this.authed)
 		const authed = this.authed
 
 		if (!authed) throw new ServerError('not logged in', 401)
@@ -22,7 +24,7 @@ export class AuthGETEndpoint extends Endpoint {
 }
 
 @route.endpoint('POST')
-export class AuthPOSTEndpoint extends Endpoint<{
+export class AuthPOSTEndpoint extends ConstructEndpoint<{
 	body: LoginCreds
 }> {
 	async handle() {
@@ -59,14 +61,14 @@ export class AuthPOSTEndpoint extends Endpoint<{
 }
 
 @route.endpoint('DELETE')
-export class AuthDELETEEndpoint extends Endpoint {
+export class AuthDELETEEndpoint extends ConstructEndpoint {
 	handle() {
 		return this.session.destroy().then(() => ({ success: true }))
 	}
 }
 
 @route.endpoint('POST', '/register')
-export class AuthRegisterEndpoint extends Endpoint<{
+export class AuthRegisterEndpoint extends ConstructEndpoint<{
 	body: RegisterData
 }> {
 	async handle() {
@@ -92,7 +94,7 @@ export class AuthRegisterEndpoint extends Endpoint<{
 }
 
 @route.endpoint('POST', '/verify')
-export class AuthVerifyEndpoint extends Endpoint<{
+export class AuthVerifyEndpoint extends ConstructEndpoint<{
 	body: { uuid: string }
 }> {
 	async handle() {
