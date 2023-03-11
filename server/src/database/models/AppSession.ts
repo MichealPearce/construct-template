@@ -1,5 +1,5 @@
-import { Model } from '@construct/server/database/Model'
 import { AppSessionData } from '@construct/shared'
+import { Model } from '@michealpearce/typeorm-models'
 import { Column, Entity } from 'typeorm'
 
 @Entity()

@@ -1,6 +1,6 @@
-import { ModelUUID } from '@construct/server/database/Model'
 import { User } from '@construct/server/database/models/User'
 import { UserRegistrationData } from '@construct/shared'
+import { ModelUUID } from '@michealpearce/typeorm-models'
 import { Column, Entity, OneToOne } from 'typeorm'
 
 @Entity()

@@ -1,5 +1,5 @@
-import { ModelUUID } from '@construct/server/database/Model'
 import { AppFileData } from '@construct/shared'
+import { ModelUUID } from '@michealpearce/typeorm-models'
 import { Column, Entity, TableInheritance } from 'typeorm'
 
 @Entity()

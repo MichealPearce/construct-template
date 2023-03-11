@@ -1,8 +1,8 @@
-import { ModelUUID } from '@construct/server/database/Model'
 import { UserAvatar } from '@construct/server/database/models/UserAvatar'
 import { UserRegistration } from '@construct/server/database/models/UserRegistration'
 import { UserRole } from '@construct/server/database/models/UserRole'
 import { UserData } from '@construct/shared'
+import { ModelUUID } from '@michealpearce/typeorm-models'
 import { Column, Entity, JoinColumn, ManyToMany, OneToOne } from 'typeorm'
 
 @Entity()

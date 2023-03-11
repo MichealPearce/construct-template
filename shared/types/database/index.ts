@@ -1,54 +1,56 @@
-export type BaseModelData = object
+import {
+	ModelData,
+	ModelUUIDData,
+	Nullable,
+} from '@michealpearce/typeorm-models'
 
-export interface ModelData extends BaseModelData {
-	created: Date | string
-	updated?: Date | string
-	deleted?: Date | string
+export {
+	BaseModelData,
+	ModelData,
+	ModelIDData,
+	ModelUUIDData,
+} from '@michealpearce/typeorm-models'
+
+export class UserData extends ModelUUIDData {
+	declare name: string
+	declare email: string
+	declare display_name: Nullable<string>
+
+	// not selected by default
+	declare password?: string
+
+	declare roles: UserRoleData[]
+
+	declare registration?: UserRegistrationData
+
+	declare avatarUUID: Nullable<string>
+	declare avatar?: UserAvatarData
 }
 
-export interface ModelIDData extends ModelData {
-	id: number
+export class UserRoleData extends ModelData {
+	declare name: string
+	declare display_name: string
 }
 
-export interface ModelUUIDData extends ModelData {
-	uuid: string
+export class AppSessionData extends ModelData {
+	declare id: string
+	declare data: Record<string, any>
 }
 
-export interface UserData extends ModelUUIDData {
-	name: string
-	email: string
-	display_name: string | null
-	password?: string
-	roles: UserRoleData[]
-	registration?: UserRegistrationData
-	avatarUUID: string | null
-	avatar?: UserAvatarData
+export class UserRegistrationData extends ModelUUIDData {
+	declare userUUID: string
+	declare user: UserData
 }
 
-export interface UserRoleData extends ModelData {
-	name: string
-	display_name: string
+export class AppFileData extends ModelUUIDData {
+	declare name: string
+	declare type: string
+	declare mime: Nullable<string>
+	declare size: Nullable<number>
+	declare path: Nullable<string>
+	declare url: Nullable<string>
 }
 
-export interface AppSessionData extends ModelData {
-	id: string
-	data: Record<string, any>
-}
-
-export interface UserRegistrationData extends ModelUUIDData {
-	userUUID: string
-	user: UserData
-}
-
-export interface AppFileData extends ModelUUIDData {
-	name: string
-	type: string
-	mime: string | null
-	size: number | null
-	path?: string | null
-	url?: string | null
-}
-
-export interface UserAvatarData extends AppFileData {
-	user?: UserData
+export class UserAvatarData extends AppFileData {
+	declare user?: UserData
 }

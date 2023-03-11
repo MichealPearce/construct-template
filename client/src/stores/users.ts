@@ -1,5 +1,6 @@
 import { defineStore } from '@construct/client/includes/functions'
 import { UserAvatarData, UserData } from '@construct/shared'
+import { assign } from '@michealpearce/utils'
 import { inject, InjectionKey, provide, reactive, Ref } from 'vue'
 
 export type UserInjectionValue = Ref<UserData | null>
@@ -25,8 +26,8 @@ export const useUsers = defineStore('users', context => {
 	 * Sets a user in the cache
 	 */
 	function set(data: UserData) {
-		if (data.uuid in items) Object.assign(items[data.uuid], data)
-		else items[data.uuid] = data
+		if (data.uuid in items) assign(items[data.uuid], data)
+		else items[data.uuid] = UserData.init(data)
 
 		return items[data.uuid]
 	}
@@ -99,7 +100,7 @@ export const useUsers = defineStore('users', context => {
 	function uploadAvatar(user: UserData, data: FormData) {
 		return api
 			.post<UserAvatarData>(`avatars/${user.uuid}`, data)
-			.then(res => res.data)
+			.then(res => UserAvatarData.init(res.data))
 			.then(avatar => {
 				user.avatarUUID = avatar.uuid
 				user.avatar = avatar
@@ -110,7 +111,7 @@ export const useUsers = defineStore('users', context => {
 	function fetchAvatar(user: UserData) {
 		return api
 			.get<UserAvatarData>(`avatars/${user.uuid}?raw=true`)
-			.then(res => res.data)
+			.then(res => UserAvatarData.init(res.data))
 			.then(avatar => {
 				user.avatarUUID = avatar.uuid
 				user.avatar = avatar

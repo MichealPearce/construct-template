@@ -1,6 +1,6 @@
-import { Model } from '@construct/server/database/Model'
 import { User } from '@construct/server/database/models/User'
 import { UserRoleData } from '@construct/shared'
+import { Model } from '@michealpearce/typeorm-models'
 import { Column, Entity, JoinTable, ManyToMany } from 'typeorm'
 
 @Entity()

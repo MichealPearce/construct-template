@@ -14,14 +14,14 @@ export const useAuth = defineStore('auth', context => {
 
 	async function fetch() {
 		const { data } = await api.get<UserData>('auth')
-		current.value = data
+		current.value = UserData.init(data)
 
 		return data
 	}
 
 	async function login(creds: LoginCreds) {
 		const { data } = await api.post<UserData>('auth', creds)
-		current.value = data
+		current.value = UserData.init(data)
 	}
 
 	async function logout() {
@@ -32,15 +32,13 @@ export const useAuth = defineStore('auth', context => {
 	function register(data: RegisterData) {
 		return api
 			.post<UserRegistrationData>('auth/register', data)
-			.then(res => res.data)
+			.then(res => UserRegistrationData.init(res.data))
 	}
 
 	async function verifyRegistration(uuid: string) {
-		const user = await api
-			.post<UserData>('auth/verify', { uuid })
-			.then(res => res.data)
+		const { data } = await api.post<UserData>('auth/verify', { uuid })
 
-		current.value = user
+		current.value = UserData.init(data)
 		return current.value
 	}
 

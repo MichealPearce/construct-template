@@ -1,5 +1,6 @@
 import { defineStore } from '@construct/client/includes/functions'
 import { UserRoleData } from '@construct/shared'
+import { assign } from '@michealpearce/utils'
 import { inject, InjectionKey, provide, reactive, Ref } from 'vue'
 
 export type UserRoleInjectionValue = Ref<UserRoleData | null>
@@ -22,8 +23,8 @@ export const useUserRoles = defineStore('userRoles', context => {
 	}
 
 	function set(data: UserRoleData) {
-		if (data.name in items) Object.assign(items[data.name], data)
-		else items[data.name] = data
+		if (data.name in items) assign(items[data.name], data)
+		else items[data.name] = UserRoleData.init(data)
 
 		return get(data.name)!
 	}

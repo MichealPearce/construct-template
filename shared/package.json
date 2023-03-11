@@ -7,6 +7,7 @@
 		"typescript": "^4.6.4"
 	},
 	"dependencies": {
+		"@michealpearce/typeorm-models": "^0.0.2",
 		"@michealpearce/utils": "^0.0.7"
 	}
 }
