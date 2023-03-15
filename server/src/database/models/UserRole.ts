@@ -15,3 +15,5 @@ export class UserRole extends Model<UserRoleData> implements UserRoleData {
 	@JoinTable()
 	declare users?: User[]
 }
+
+export const model = UserRole

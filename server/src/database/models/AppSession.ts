@@ -13,3 +13,5 @@ export class AppSession
 	@Column('simple-json')
 	declare data: any
 }
+
+export const model = AppSession

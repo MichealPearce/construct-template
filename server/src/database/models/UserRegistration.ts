@@ -14,3 +14,5 @@ export class UserRegistration
 	@OneToOne(() => User, user => user.registration)
 	declare user: User
 }
+
+export const model = UserRegistration

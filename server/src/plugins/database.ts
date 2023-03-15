@@ -1,30 +1,19 @@
-import { AppFile } from '@construct/server/database/models/AppFile'
-import { AppSession } from '@construct/server/database/models/AppSession'
+import { config } from '@construct/server/config'
 import { User } from '@construct/server/database/models/User'
-import { UserAvatar } from '@construct/server/database/models/UserAvatar'
-import { UserRegistration } from '@construct/server/database/models/UserRegistration'
 import { UserRole } from '@construct/server/database/models/UserRole'
 import { hashPassword } from '@construct/server/includes/functions'
 import { ConstructError } from '@michealpearce/utils'
 import { FastifyInstance } from 'fastify'
-import { resolve } from 'path'
-import { DataSource } from 'typeorm'
+import { DataSource, DataSourceOptions } from 'typeorm'
+
+declare module '@construct/server/config' {
+	export interface ConstructServerConfig {
+		database: DataSourceOptions
+	}
+}
 
 export async function registerDatabase(instance: FastifyInstance) {
-	const source = new DataSource({
-		type: 'sqlite',
-		database: resolve(__BIN_ROOT__, 'database.sqlite'),
-		entities: [
-			User,
-			UserRole,
-			AppSession,
-			UserRegistration,
-			AppFile,
-			UserAvatar,
-		],
-		synchronize: true,
-		// logging: true,
-	})
+	const source = new DataSource(config.database)
 
 	try {
 		instance.log.info('connecting to database...')

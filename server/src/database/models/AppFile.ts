@@ -26,3 +26,5 @@ export class AppFile<Data extends AppFileData = AppFileData>
 	@Column('varchar', { nullable: true })
 	declare url: string | null
 }
+
+export const model = AppFile

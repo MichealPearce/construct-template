@@ -11,3 +11,5 @@ export class UserAvatar
 	@OneToOne(() => User, user => user.avatar)
 	declare user?: User
 }
+
+export const model = UserAvatar

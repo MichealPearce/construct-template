@@ -49,3 +49,5 @@ export class User extends ModelUUID<UserData> implements UserData {
 		return this.roles.some(r => r.name === role.name)
 	}
 }
+
+export const model = User

@@ -1,6 +1,13 @@
+import { config } from '@construct/server/config'
 import { inObject, isFunction, isObject } from '@michealpearce/utils'
 import { FastifyInstance } from 'fastify'
-import { Server } from 'socket.io'
+import { Server, ServerOptions } from 'socket.io'
+
+declare module '@construct/server/config' {
+	export interface ConstructServerConfig {
+		io?: Partial<ServerOptions> | false
+	}
+}
 
 declare module 'fastify' {
 	interface FastifyInstance {
@@ -15,6 +22,11 @@ declare module 'socket.io' {
 }
 
 export async function registerIO(instance: FastifyInstance) {
+	if (config.io === false) {
+		instance.log.info('socket.io disabled')
+		return
+	}
+
 	const getSession = (sessionID: string, request: any = {}) =>
 		new Promise<Record<string, any>>((resolve, reject) =>
 			instance.decryptSession(sessionID, request, {}, err =>
@@ -22,13 +34,7 @@ export async function registerIO(instance: FastifyInstance) {
 			),
 		)
 
-	const io = new Server(instance.server, {
-		path: '/io',
-		serveClient: false,
-		cors: {
-			origin: import.meta.env.CLIENT_URL,
-		},
-	})
+	const io = new Server(instance.server, config.io)
 
 	instance.decorate('io', io)
 
